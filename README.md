@@ -1,5 +1,5 @@
 # Compilador Léxico Visualg
-Este é um compilador léxico desenvolvido para a linguagem VisuAlg, criado como parte de um trabalho do curso de Compiladores no Instituto Federal de São Paulo (IFSP). O projeto foca na análise léxica, identificando tokens e categorizando elementos da linguagem VisuAlg, como palavras-chave, identificadores, operadores e delimitadores. Além de realizar a análise de símbolos, o compilador oferece uma funcionalidade de ajuda para o usuário, exibindo um manual detalhado sobre as instruções do VisuAlg, tornando-o uma ferramenta educativa e útil para iniciantes na programação.
+Este é um compilador léxico desenvolvido para a linguagem VisuAlg, criado como parte de um trabalho do curso de Compiladores no Instituto Federal de São Paulo (IFSP). O projeto foca na análise léxica, identificando tokens e categorizando elementos da linguagem VisuAlg, como palavras-chave, identificadores, operadores e delimitadores. Além de realizar a análise de símbolos, o compilador oferece uma funcionalidade de ajuda para o usuário, exibindo um manual detalhado sobre as instruções do VisuAlg.
 
 ## **Como utilizar**
 ### **Requsitos**
