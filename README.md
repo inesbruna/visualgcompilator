@@ -12,7 +12,7 @@ Este é um compilador léxico desenvolvido para a linguagem VisuAlg, criado como
 
 **Caixa de Saída Superior:** responsável por entregar o código compilado ao usuário.
 
-**Botão Compilador Léxico:** compila o código da caixa de entrada.
+**Botão Compilador Léxico:** compila o código da caixa de entrada e saída.
 
 **Botão Carregar Arquivo:** carrega um arquivo de extensão .txt da máquina do usuário para a caixa de entrada do compilador.
 
