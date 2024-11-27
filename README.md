@@ -7,6 +7,10 @@ Este é um compilador léxico desenvolvido para a linguagem VisuAlg, criado como
 
 [Python Download](https://www.python.org/downloads/)
 
+Assim como Pandas 2.2.3+.
+
+[Pandas Download](https://pandas.pydata.org/docs/getting_started/install.html)
+
 ### **Features**
 **Caixa de Entrada Superior:** responsável por receber o código do usuário a ser compilado.
 
