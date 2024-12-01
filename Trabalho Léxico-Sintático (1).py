@@ -369,8 +369,7 @@ def lexico(lista):
 
 transicao_sintatico = {
     'ALGORITMO': {'S': ['NOME_ALGORITMO/VALOR_LITERAL', 'INICIAR', 'COMANDOS']},
-    'INICIO': {'INICIAR': [] , 'VAR':['VAR','VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO',
-                                     'OP_DELIMITACAO', 'TIPO_DADO', 'INICIAR']  },
+    'INICIO': {'INICIAR': []  },
     'VAR':{'INICIAR':['VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO',
                                      'COMPLEMENTAR', 'TIPO_DADO', 'INICIAR'] },
     'OP_DELIMITACAO': { 'OP_DELIMITACAO':[] , 'COMPLEMENTAR': [ ]},
@@ -378,12 +377,12 @@ transicao_sintatico = {
     'OP_SEP_MESMO_TIPO': { 'COMPLEMENTAR' : [ 'VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO', 'COMPLEMENTAR'], 'COMPLEMENTAR2' : [ 'VALOR_INT', 'OP_DIMENSAO_VETOR', 'VALOR_INT', 'FECHA_COLCHETE' ] },
 
     'VETOR' : { 'TIPO_DADO': ['LIMITADOR'] }, 
-    'INTEIRO': { 'TIPO_DADO': [] },  
-    'REAL': {'TIPO_DADO': []},  
-    'CARACTERE': {'TIPO_DADO': []}, 
-    'LOGICO': {'TIPO_DADO': []},
+    'INTEIRO': { 'TIPO_DADO': [], 'TIPO_DADO2': [] },  
+    'REAL': {'TIPO_DADO': [], 'TIPO_DADO2': []},  
+    'CARACTERE': {'TIPO_DADO': [], 'TIPO_DADO2': []}, 
+    'LOGICO': {'TIPO_DADO': [], 'TIPO_DADO2': []},
 
-    'ABRE_COLCHETE': {  'LIMITADOR' : [ 'VALOR_INT', 'OP_DIMENSAO_VETOR', 'VALOR_INT', 'COMPLEMENTAR2',  'DE', 'TIPO_DADO' ]  }, 
+    'ABRE_COLCHETE': {  'LIMITADOR' : [ 'VALOR_INT', 'OP_DIMENSAO_VETOR', 'VALOR_INT', 'COMPLEMENTAR2',  'DE', 'TIPO_DADO2' ]  }, 
     'OP_SEP_DIFERENTE_TIPO' : {  'OP_SEP_DIFERENTE_TIPO' : [ ] },
     'FECHA_COLCHETE':{'COMPLEMENTAR2' : [ ], 'FECHA_COLCHETE' : [ ] },
 
