@@ -1,5 +1,5 @@
-# Compilador Léxico Visualg
-Este é um compilador léxico desenvolvido para a linguagem VisuAlg, criado como parte de um trabalho do curso de Compiladores no Instituto Federal de São Paulo (IFSP). O projeto foca na análise léxica, identificando tokens e categorizando elementos da linguagem VisuAlg, como palavras-chave, identificadores, operadores e delimitadores. Além de realizar a análise de símbolos, o compilador oferece uma funcionalidade de ajuda para o usuário, exibindo um manual detalhado sobre as instruções do VisuAlg.
+# Compilador Léxico-Sintático Visualg
+Este é um compilador léxico-sintático desenvolvido para a linguagem VisuAlg, criado como parte de um trabalho do curso de Compiladores no Instituto Federal de São Paulo (IFSP). O projeto foca na análise léxica e sintática, identificando tokens e categorizando elementos da linguagem VisuAlg, como palavras-chave, identificadores, operadores e delimitadores. Além de realizar a análise léxica, o compilador também realiza a análise sintática, garantindo que o código esteja sintaticamente correto.
 
 ## **Como utilizar**
 ### **Requisitos**
@@ -7,16 +7,12 @@ Este é um compilador léxico desenvolvido para a linguagem VisuAlg, criado como
 
 [Python Download](https://www.python.org/downloads/)
 
-Assim como Pandas 2.2.3+.
-
-[Pandas Download](https://pandas.pydata.org/docs/getting_started/install.html)
-
 ### **Features**
 **Caixa de Entrada Superior:** responsável por receber o código do usuário a ser compilado.
 
 **Caixa de Saída Superior:** responsável por entregar o código compilado ao usuário.
 
-**Botão Compilador Léxico:** compila o código da caixa de entrada.
+**Botão Compilar:** compila o código da caixa de entrada.
 
 **Botão Carregar Arquivo:** carrega um arquivo de extensão .txt da máquina do usuário para a caixa de entrada do compilador.
 
