@@ -368,84 +368,302 @@ def lexico(lista):
 
 
 transicao_sintatico = {
-    'ALGORITMO': {'S': ['NOME_ALGORITMO/VALOR_LITERAL', 'INICIAR', 'COMANDOS']},
-    'INICIO': {'INICIAR': []  },
-    'VAR':{'INICIAR':['VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO',
-                                     'COMPLEMENTAR', 'TIPO_DADO', 'INICIAR'] },
-    'OP_DELIMITACAO': { 'OP_DELIMITACAO':[] , 'COMPLEMENTAR': [ ]},
+    'ALGORITMO': {
+        'S': ['NOME_ALGORITMO/VALOR_LITERAL', 'INICIAR', 'COMANDOS']
+    },
 
-    'OP_SEP_MESMO_TIPO': { 'COMPLEMENTAR' : [ 'VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO', 'COMPLEMENTAR'], 'COMPLEMENTAR2' : [ 'VALOR_INT', 'OP_DIMENSAO_VETOR', 'VALOR_INT', 'FECHA_COLCHETE' ] },
+    'INICIO': {
+        'INICIAR': []
+    },
 
-    'VETOR' : { 'TIPO_DADO': ['LIMITADOR'] }, 
-    'INTEIRO': { 'TIPO_DADO': [], 'TIPO_DADO2': [] },  
-    'REAL': {'TIPO_DADO': [], 'TIPO_DADO2': []},  
-    'CARACTERE': {'TIPO_DADO': [], 'TIPO_DADO2': []}, 
-    'LOGICO': {'TIPO_DADO': [], 'TIPO_DADO2': []},
+    'VAR': {
+        'INICIAR': ['VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO', 'COMPLEMENTAR', 'TIPO_DADO', 'INICIAR']
+    },
 
-    'ABRE_COLCHETE': {  'LIMITADOR' : [ 'VALOR_INT', 'OP_DIMENSAO_VETOR', 'VALOR_INT', 'COMPLEMENTAR2',  'DE', 'TIPO_DADO2' ]  }, 
-    'OP_SEP_DIFERENTE_TIPO' : {  'OP_SEP_DIFERENTE_TIPO' : [ ] },
-    'FECHA_COLCHETE':{'COMPLEMENTAR2' : [ ], 'FECHA_COLCHETE' : [ ] },
+    'OP_DELIMITACAO': {
+        'OP_DELIMITACAO': [], 
+        'COMPLEMENTAR': []
+    },
 
-    'OP_DIMENSAO_VETOR' : { 'OP_DIMENSAO_VETOR' : [] },
-    'DE' : { 'DE' : [] },
+    'OP_SEP_MESMO_TIPO': {
+        'COMPLEMENTAR': ['VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO', 'COMPLEMENTAR'], 
+        'COMPLEMENTAR2': ['VALOR_INT', 'OP_DIMENSAO_VETOR', 'VALOR_INT', 'FECHA_COLCHETE']
+    },
 
+    'OP_REL': { 
+        'OP_REL': [] 
+    },
 
+    'VETOR': {
+        'TIPO_DADO': ['LIMITADOR']
+    },
 
+    'INTEIRO': {
+        'TIPO_DADO': [], 
+        'TIPO_DADO2': []
+    },
+
+    'REAL': {
+        'TIPO_DADO': [], 
+        'TIPO_DADO2': []
+    },
+
+    'CARACTERE': {
+        'TIPO_DADO': [], 
+        'TIPO_DADO2': []
+    },
+
+    'LOGICO': {
+        'TIPO_DADO': [], 'TIPO_DADO2': []
+    },
+
+    'ABRE_COLCHETE': {
+        'LIMITADOR': ['VALOR_INT', 'OP_DIMENSAO_VETOR', 'VALOR_INT', 'COMPLEMENTAR2', 'DE', 'TIPO_DADO2']
+    },
+
+    'OP_SEP_DIFERENTE_TIPO': {
+        'OP_SEP_DIFERENTE_TIPO': []
+    },
+
+    'FECHA_COLCHETE': {
+        'COMPLEMENTAR2': [], 'FECHA_COLCHETE': []
+    },
+
+    'OP_DIMENSAO_VETOR': {
+        'OP_DIMENSAO_VETOR': []
+    },
+
+    'DE': {
+        'DE': []
+    },
     
-    'VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO': {'COMANDOS':  ['OP_ATRIB', 'EXPRESSAO'],
-           'EXPRESSAO': ['MAISEXPRESSAO'],
-           'OP_ARIT/OP_CARACTERE' : [ ], 'OP_ARIT' :[],
-            'VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO': [], 'MAISEXPRESSAO': ['OP_ATRIB', 'EXPRESSAO'], 
-              'PARENTESES': ['FECHAPARENTESES']} ,
+    'VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO': {
+        'COMANDOS': ['OP_ATRIB', 'EXPRESSAO'],
+        'PARA_COMANDOS': ['OP_ATRIB', 'PARA_EXPRESSAO'],
+        'ENQUANTO_COMANDOS': ['OP_ATRIB', 'ENQUANTO_EXPRESSAO'],
+        'ESCOLHA_COMANDOS': ['OP_ATRIB', 'ESCOLHA_EXPRESSAO'],
+        'ESCOLHA_OC_COMANDOS': ['OP_ATRIB', 'ESCOLHA_OC_EXPRESSAO'],
+
+        'EXPRESSAO': ['MAISEXPRESSAO'],
+        'PARA_EXPRESSAO': ['PARA_MAISEXPRESSAO'],
+        'ENQUANTO_EXPRESSAO': ['ENQUANTO_MAISEXPRESSAO'],
+        'ESCOLHA_EXPRESSAO': ['ESCOLHA_MAISEXPRESSAO'],
+        'ESCOLHA_OC_EXPRESSAO': ['ESCOLHA_OC_MAISEXPRESSAO'], 
+
+        'MAISEXPRESSAO': ['OP_ATRIB', 'EXPRESSAO'],
+        'PARA_MAISEXPRESSAO': ['OP_ATRIB', 'PARA_EXPRESSAO'],
+        'ENQUANTO_MAISEXPRESSAO': ['OP_ATRIB', 'ENQUANTO_EXPRESSAO'],
+        'ESCOLHA_MAISEXPRESSAO': ['OP_ATRIB', 'ESCOLHA_EXPRESSAO'],
+        'ESCOLHA_OC_MAISEXPRESSAO': ['OP_ATRIB', 'ESCOLHA_OC_EXPRESSAO'],
+
+        'OP_ARIT/OP_CARACTERE': [], 'OP_ARIT': [],
+        'VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO': [],
+        'COMPARACAO': ['OP_REL', 'OP_ARIT'],
+        'PARENTESES': ['FECHAPARENTESES']
+    },
+
+    'ABRE_PARENTESES': {
+        'EXPRESSAO': ['PARENTESES', 'MAISEXPRESSAO'],
+        'PARA_EXPRESSAO': ['PARA_MAISEXPRESSAO'],
+        'ENQUANTO_EXPRESSAO': ['ENQUANTO_MAISEXPRESSAO'],
+        'ESCOLHA_EXPRESSAO': ['ESCOLHA_MAISEXPRESSAO'], 
+        'ESCOLHA_OC_EXPRESSAO': ['ESCOLHA_OC_MAISEXPRESSAO'],
+        'PARENTESES': ['PARENTESES', 'FECHAPARENTESES']
+    },
+
+    'FECHA_PARENTESES': {
+        'FECHAPARENTESES': []
+    },
+
+    'VALOR_INT': {
+        'EXPRESSAO': ['MAISEXPRESSAO'],
+        'PARA_EXPRESSAO': ['PARA_MAISEXPRESSAO'],
+        'ENQUANTO_EXPRESSAO': ['ENQUANTO_MAISEXPRESSAO'],
+        'ESCOLHA_EXPRESSAO': ['ESCOLHA_MAISEXPRESSAO'],
+        'ESCOLHA_OC_EXPRESSAO': ['ESCOLHA_OC_MAISEXPRESSAO'],
+        'OP_ARIT/OP_CARACTERE': [], 
+        'OP_ARIT': [], 
+        'MOD': [], 
+        'VALOR_INT': [],
+        'PARENTESES': ['FECHAPARENTESES']
+    },
+
+    'VALOR_REAL': {
+        'EXPRESSAO': ['MAISEXPRESSAO'],
+        'PARA_EXPRESSAO': ['PARA_MAISEXPRESSAO'],
+        'ENQUANTO_EXPRESSAO': ['ENQUANTO_MAISEXPRESSAO'],
+        'ESCOLHA_EXPRESSAO': ['ESCOLHA_MAISEXPRESSAO'],
+        'ESCOLHA_OC_EXPRESSAO': ['ESCOLHA_OC_MAISEXPRESSAO'],
+        'OP_ARIT/OP_CARACTERE': [], 
+        'OP_ARIT': [], 
+        'MOD': [], 
+        'VALOR_REAL': [],
+        'PARENTESES': ['FECHAPARENTESES'],
+    },
+
+    'VALOR_LITERAL': {
+        'EXPRESSAO': ['MAISEXPRESSAO'],
+        'PARA_EXPRESSAO': ['PARA_MAISEXPRESSAO'],
+        'ENQUANTO_EXPRESSAO': ['ENQUANTO_MAISEXPRESSAO'],
+        'ESCOLHA_EXPRESSAO': ['ESCOLHA_MAISEXPRESSAO'],
+        'ESCOLHA_OC_EXPRESSAO': ['ESCOLHA_OC_MAISEXPRESSAO'],
+        'OP_ARIT/OP_CARACTERE': [], 
+        'OP_ARIT': [], 
+        'MOD': [], 
+        'VALOR_LITERAL': [],
+        'PARENTESES': ['FECHAPARENTESES']
+    },
+
+    'VALOR_CARACTERE': {
+        'EXPRESSAO': ['MAISEXPRESSAO'],
+        'PARA_EXPRESSAO': ['PARA_MAISEXPRESSAO'],
+        'ENQUANTO_EXPRESSAO': ['ENQUANTO_MAISEXPRESSAO'],
+        'ESCOLHA_EXPRESSAO': ['ESCOLHA_MAISEXPRESSAO'],
+        'ESCOLHA_OC_EXPRESSAO': ['ESCOLHA_OC_MAISEXPRESSAO'],
+        'OP_ARIT/OP_CARACTERE': [], 
+        'OP_ARIT': [], 
+        'MOD': [], 
+        'VALOR_CARACTERE': [],
+        'PARENTESES': ['FECHAPARENTESES']
+    },
+
+    'VERDADEIRO': {
+        'EXPRESSAO': ['MAISEXPRESSAO'],
+        'PARA_EXPRESSAO': ['PARA_MAISEXPRESSAO'],
+        'ENQUANTO_EXPRESSAO': ['ENQUANTO_MAISEXPRESSAO'],
+        'ESCOLHA_EXPRESSAO': ['ESCOLHA_MAISEXPRESSAO'],
+        'ESCOLHA_OC_EXPRESSAO': ['ESCOLHA_OC_MAISEXPRESSAO'],
+        'OP_ARIT/OP_CARACTERE': [], 
+        'OP_ARIT': [], 
+        'MOD': [], 
+        'VALOR_LOGICO': [],
+        'PARENTESES': ['FECHAPARENTESES']
+    },
+
+    'FALSO': {
+        'EXPRESSAO': ['MAISEXPRESSAO'],
+        'PARA_EXPRESSAO': ['PARA_MAISEXPRESSAO'],
+        'ENQUANTO_EXPRESSAO': ['ENQUANTO_MAISEXPRESSAO'],
+        'ESCOLHA_EXPRESSAO': ['ESCOLHA_MAISEXPRESSAO'],
+        'ESCOLHA_OC_EXPRESSAO': ['ESCOLHA_OC_MAISEXPRESSAO'],
+        'OP_ARIT/OP_CARACTERE': [], 
+        'OP_ARIT': [], 
+        'MOD': [], 
+        'VALOR_LOGICO': [],
+        'PARENTESES': ['FECHAPARENTESES']
+    },
+
+    'NOME_ALGORITMO/VALOR_LITERAL': {
+        'EXPRESSAO': ['MAISEXPRESSAO'],
+        'PARA_EXPRESSAO': ['PARA_MAISEXPRESSAO'],
+        'ENQUANTO_EXPRESSAO': ['ENQUANTO_MAISEXPRESSAO'],
+        'ESCOLHA_EXPRESSAO': ['ESCOLHA_MAISEXPRESSAO'],
+        'ESCOLHA_OC_EXPRESSAO': ['ESCOLHA_OC_MAISEXPRESSAO'],
+        'OP_ARIT/OP_CARACTERE': [], 
+        'OP_ARIT': [], 
+        'MOD': [], 'NOME_ALGORITMO/VALOR_LITERAL': [],
+        'PARENTESES': ['FECHAPARENTESES']
+    },
+
+    'OP_ARIT/OP_CARACTERE': {
+        'MAISEXPRESSAO': ['EXPRESSAO'],
+        'PARA_MAISEXPRESSAO': ['PARA_EXPRESSAO'],
+        'ENQUANTO_MAISEXPRESSAO': ['ENQUANTO_EXPRESSAO'],
+        'ESCOLHA_MAISEXPRESSAO': ['ESCOLHA_EXPRESSAO'],
+        'ESCOLHA_OC_MAISEXPRESSAO': ['ESCOLHA_OC_EXPRESSAO'],
+        'FECHAPARENTESES': ['PARENTESES']
+    },
+
+    'OP_ARIT': {
+        'MAISEXPRESSAO': ['EXPRESSAO'],
+        'PARA_MAISEXPRESSAO': ['PARA_EXPRESSAO'],
+        'ENQUANTO_MAISEXPRESSAO': ['ENQUANTO_EXPRESSAO'],
+        'ESCOLHA_MAISEXPRESSAO': ['ESCOLHA_EXPRESSAO'],
+        'ESCOLHA_OC_MAISEXPRESSAO': ['ESCOLHA_OC_EXPRESSAO'],
+        'FECHAPARENTESES': ['PARENTESES']
+    },
+
+    'MOD': {
+        'MAISEXPRESSAO': ['EXPRESSAO'],
+        'PARA_MAISEXPRESSAO': ['PARA_EXPRESSAO'],
+        'ENQUANTO_MAISEXPRESSAO': ['ENQUANTO_EXPRESSAO'],
+        'ESCOLHA_MAISEXPRESSAO': ['ESCOLHA_EXPRESSAO'],
+        'ESCOLHA_OC_MAISEXPRESSAO': ['ESCOLHA_OC_EXPRESSAO'],
+        'FECHAPARENTESES': ['PARENTESES']
+    },
+
+    'OP_ATRIB': {
+        'OP_ATRIB': []
+    },
+
+    'FIMALGORITMO': {
+        'MAISEXPRESSAO': [], 
+        'COMANDOS': []
+    },
+
+    # PARA - FACA 
+
+    'PARA': {
+        'COMANDOS': ['VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO', 'DE', 'VALOR_INT', 'ATE', 'VALOR_INT', 'FACA_PASSO', 'PARA_COMANDOS', 'COMANDOS'],
+        'PARA_COMANDOS': ['VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO', 'DE', 'VALOR_INT', 'ATE', 'VALOR_INT', 'FACA_PASSO', 'PARA_COMANDOS', 'PARA_MAISEXPRESSAO'],
+        'ENQUANTO_COMANDOS': ['VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO', 'DE', 'VALOR_INT', 'ATE', 'VALOR_INT', 'FACA_PASSO', 'PARA_COMANDOS', 'ENQUANTO_MAISEXPRESSAO'],
+        'ESCOLHA_COMANDOS': ['VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO', 'DE', 'VALOR_INT', 'ATE', 'VALOR_INT', 'FACA_PASSO', 'PARA_COMANDOS', 'ESCOLHA_MAISEXPRESSAO'],
+        'ESCOLHA_OC_COMANDOS': ['VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO', 'DE', 'VALOR_INT', 'ATE', 'VALOR_INT', 'FACA_PASSO', 'PARA_COMANDOS', 'ESCOLHA_OC_MAISEXPRESSAO']
+    },
+
+    'ATE': {
+        'ATE': [],
+    },
+
+    'FACA': {
+        'FACA_PASSO': [],
+        'FACA': []
+    },
+
+    'PASSO': {
+        'FACA_PASSO': ['VALOR_INT', 'FACA']
+    },
     
-    'ABRE_PARENTESES':{ 'EXPRESSAO' : ['PARENTESES', 'MAISEXPRESSAO'], 'PARENTESES': ['PARENTESES', 'FECHAPARENTESES']},
-    'FECHA_PARENTESES': { 'FECHAPARENTESES' : [ ]  } ,
+    'FIMPARA': {
+        'PARA_MAISEXPRESSAO': []
+    },
+
+    # ENQUANTO
+
+    'ENQUANTO': {
+        'COMANDOS': ['COMPARACAO', 'FACA', 'ENQUANTO_COMANDOS', 'COMANDOS'],
+        'PARA_COMANDOS': ['COMPARACAO', 'FACA', 'ENQUANTO_COMANDOS', 'PARA_MAISEXPRESSAO'],
+        'ENQUANTO_COMANDOS': ['COMPARACAO', 'FACA', 'ENQUANTO_COMANDOS', 'ENQUANTO_MAISEXPRESSAO'],
+        'ESCOLHA_COMANDOS': ['COMPARACAO', 'FACA', 'ENQUANTO_COMANDOS', 'ESCOLHA_MAISEXPRESSAO'],
+        'ESCOLHA_OC_COMANDOS': ['COMPARACAO', 'FACA', 'ENQUANTO_COMANDOS', 'ESCOLHA_OC_MAISEXPRESSAO']
+    },
+
+    'FIMENQUANTO': {
+        'ENQUANTO_MAISEXPRESSAO': []
+    },
     
-    
-    'VALOR_INT' : { 'EXPRESSAO' : [ 'MAISEXPRESSAO' ] ,
-                'OP_ARIT/OP_CARACTERE' : [ ], 'OP_ARIT' : [ ], 'MOD': [ ], 'VALOR_INT': [], 
-              'PARENTESES': ['FECHAPARENTESES']
-                        
-                    } ,
-    'VALOR_REAL' : { 'EXPRESSAO' : [ 'MAISEXPRESSAO' ] ,
-                'OP_ARIT/OP_CARACTERE' : [ ], 'OP_ARIT' : [ ], 'MOD': [ ], 'VALOR_REAL': [ ], 
-              'PARENTESES': ['FECHAPARENTESES']
-                        } ,
-    'VALOR_LITERAL' : { 'EXPRESSAO' : [ 'MAISEXPRESSAO' ] ,
-                'OP_ARIT/OP_CARACTERE' : [ ], 'OP_ARIT' : [ ],'MOD': [ ], 'VALOR_LITERAL': [ ], 
-              'PARENTESES': ['FECHAPARENTESES'] },
+    # ESCOLHA
 
+    'ESCOLHA': {
+        'COMANDOS': ['VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO', 'CASO', 'COMPARACAO', 'ESCOLHA_COMANDOS', 'COMANDOS'],
+        'PARA_COMANDOS': ['VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO', 'CASO', 'COMPARACAO', 'ESCOLHA_COMANDOS', 'PARA_MAISEXPRESSAO'],
+        'ENQUANTO_COMANDOS': ['VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO', 'CASO', 'COMPARACAO', 'ESCOLHA_COMANDOS', 'ENQUANTO_MAISEXPRESSAO'],
+        'ESCOLHA_COMANDOS': ['VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO', 'CASO', 'COMPARACAO', 'ESCOLHA_COMANDOS', 'ESCOLHA_MAISEXPRESSAO'],
+    },
 
-    #Falta permitir essa possiblidade
-    'VALOR_CARACTERE' : { 'EXPRESSAO' : [ 'MAISEXPRESSAO' ] ,              
-                'OP_ARIT/OP_CARACTERE' : [ ], 'OP_ARIT' : [ ],'MOD': [ ], 'VALOR_CARACTERE': [ ], 
-              'PARENTESES': ['FECHAPARENTESES'] },
+    'CASO': {
+        'CASO': [],
+        'ESCOLHA_MAISEXPRESSAO': ['COMPARACAO', 'ESCOLHA_COMANDOS']
+    },
 
-    
+    'OUTROCASO': {
+        'ESCOLHA_MAISEXPRESSAO': ['ESCOLHA_OC_COMANDOS'],
+        'ESCOLHA_OC_MAISEXPRESSAO': ['ESCOLHA_OC_COMANDOS']
+    },
 
-    'VERDADEIRO' : { 'EXPRESSAO' : [ 'MAISEXPRESSAO' ] ,
-                'OP_ARIT/OP_CARACTERE' : [ ], 'OP_ARIT' : [ ], 'MOD': [ ], 'VALOR_LOGICO': [ ], 
-              'PARENTESES': ['FECHAPARENTESES'] },
-
-    'FALSO' : { 'EXPRESSAO' : [ 'MAISEXPRESSAO' ] ,
-                'OP_ARIT/OP_CARACTERE' : [ ], 'OP_ARIT' : [ ], 'MOD': [ ], 'VALOR_LOGICO': [ ], 
-              'PARENTESES': ['FECHAPARENTESES'] },
-
-    'NOME_ALGORITMO/VALOR_LITERAL' : { 'EXPRESSAO' : [ 'MAISEXPRESSAO' ] ,
-            'OP_ARIT/OP_CARACTERE' : [ ], 'OP_ARIT' : [ ], 'MOD': [ ], 'NOME_ALGORITMO/VALOR_LITERAL': [ ], 
-              'PARENTESES': ['FECHAPARENTESES']
-                         } ,
-    'NOME_ALGORITMO/VALOR_LITERAL' :  { 'EXPRESSAO' : [ 'MAISEXPRESSAO' ] ,
-                'OP_ARIT/OP_CARACTERE' : [ ], 'OP_ARIT' : [ ], 'MOD': [ ],  'NOME_ALGORITMO/VALOR_LITERAL': [ ], 
-              'PARENTESES': ['FECHAPARENTESES'] } ,
-
-  
-    'OP_ARIT/OP_CARACTERE' : { 'MAISEXPRESSAO' : [ 'EXPRESSAO' ], 'FECHAPARENTESES':['PARENTESES']},
-    'OP_ARIT' : { 'MAISEXPRESSAO' : [ 'EXPRESSAO' ], 'FECHAPARENTESES':['PARENTESES'] },
-    'MOD' : { 'MAISEXPRESSAO' : [ 'EXPRESSAO' ], 'FECHAPARENTESES':['PARENTESES'] },
-    
-    'OP_ATRIB': {'OP_ATRIB':[]},
-    'FIMALGORITMO': { 'MAISEXPRESSAO':[], 'COMANDOS':[]},
+    'FIMESCOLHA': {
+        'ESCOLHA_OC_MAISEXPRESSAO': []
+    }
 
 }  # FECHA O dicionário transição_pilha
 
@@ -457,11 +675,13 @@ def buscar_erro(simbolo, transicoes):
             return palavra
         return None
 
-def trata_erro(topo, terminal):
+def trata_erro(topo, terminal, pilha):
     palavra_esperada = buscar_erro(topo, transicao_sintatico)
-    return f'Erro: Espera-se "{palavra_esperada}" ao invés de "{terminal}"'
-
-
+    if palavra_esperada != None:
+        return f'Erro: Espera-se "{palavra_esperada}" ao invés de "{terminal}"'
+    else:
+        return f'Erro: na palavra "{terminal}", Token Esperado: {topo}, Pilha: "{pilha}"'
+    
 # Definição Sintático
 
 def sintatico(cadeia):
@@ -475,9 +695,9 @@ def sintatico(cadeia):
         if len(pilha) == 0:
             estado = 'qf'
         if estado != 'qf':
-            return trata_erro(topo, terminal)
+            return trata_erro(topo, terminal, pilha)
     except Exception:
-        return trata_erro(topo, terminal)
+        return trata_erro(topo, terminal, pilha)
     return "aceito"
 
 # Compilar a parte léxica
