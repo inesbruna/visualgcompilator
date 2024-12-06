@@ -330,11 +330,9 @@ def lexico(lista):
                 tabela_simbolos.append([palavra, 'ABRE_COLCHETE'])
             elif (palavra == ']'):
                 tabela_simbolos.append([palavra, 'FECHA_COLCHETE'])
-            elif (palavra in ['>=', '<=', '<>']):
+            elif (palavra in ['=', '>=', '<=', '<>']):
                 tabela_simbolos.append([palavra, 'OP_REL'])
             elif (palavra == '='):
-                tabela_simbolos.append([palavra, 'OP_IGUAL'])
-            elif (palavra == '"'):
                 tabela_simbolos.append([palavra, 'ASPAS'])
             elif (palavra == ','):
                 tabela_simbolos.append([palavra, 'OP_SEP_MESMO_TIPO'])
@@ -382,10 +380,6 @@ transicao_sintatico = {
 
     'OP_REL': { 
         'OP_REL': ['OPERANDO']
-    },
-
-    'OP_IGUAL': {
-        'OP_REL': ['VALOR_LOGICO']
     },
 
     'VETOR': {
