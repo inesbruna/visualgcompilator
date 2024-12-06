@@ -594,6 +594,7 @@ transicao_sintatico = {
     },
 
     'OP_ARIT/OP_CARACTERE': {
+        'FECHAPARENTESES':['PARENTESES'],
         'MAISEXPRESSAO': ['EXPRESSAO'],
         'SE_MAISEXPRESSAO': ['SE_EXPRESSAO'],
         'SENAO_MAISEXPRESSAO': ['SENAO_EXPRESSAO'],
@@ -604,6 +605,7 @@ transicao_sintatico = {
     },
 
     'OP_ARIT': {
+        'FECHAPARENTESES':['PARENTESES'],
         'MAISEXPRESSAO': ['EXPRESSAO'],
         'SE_MAISEXPRESSAO': ['SE_EXPRESSAO'],
         'SENAO_MAISEXPRESSAO': ['SENAO_EXPRESSAO'],
@@ -614,6 +616,7 @@ transicao_sintatico = {
     },
 
     'MOD': {
+        'FECHAPARENTESES':['PARENTESES'],
         'MAISEXPRESSAO': ['EXPRESSAO'],
         'SE_MAISEXPRESSAO': ['SE_EXPRESSAO'],
         'SENAO_MAISEXPRESSAO': ['SENAO_EXPRESSAO'],
@@ -830,7 +833,7 @@ def buscar_erro(simbolo, transicoes):
             return palavra
         return None
 
-def trata_erro(topo, terminal, pilha):
+def trata_erro(topo, terminal, pilha, tabela_simbolos):
     palavra_esperada = buscar_erro(topo, transicao_sintatico)
     if palavra_esperada != None:
         return f'Erro: Espera-se "{palavra_esperada}" ao invés de "{terminal}"'
