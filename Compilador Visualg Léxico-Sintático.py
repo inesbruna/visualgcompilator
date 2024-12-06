@@ -486,6 +486,7 @@ transicao_sintatico = {
         'ENQUANTO_EXPRESSAO': ['ENQUANTO_MAISEXPRESSAO'],
         'ESCOLHA_EXPRESSAO': ['ESCOLHA_MAISEXPRESSAO'],
         'ESCOLHA_OC_EXPRESSAO': ['ESCOLHA_OC_MAISEXPRESSAO'],
+        'PARENTESES': ['FECHAPARENTESES'],
 
         'OPERANDO': [],
         'VALOR_ESCOLHA': [],
@@ -503,6 +504,7 @@ transicao_sintatico = {
         'ENQUANTO_EXPRESSAO': ['ENQUANTO_MAISEXPRESSAO'],
         'ESCOLHA_EXPRESSAO': ['ESCOLHA_MAISEXPRESSAO'],
         'ESCOLHA_OC_EXPRESSAO': ['ESCOLHA_OC_MAISEXPRESSAO'],
+        'PARENTESES': ['FECHAPARENTESES'],
 
         'OPERANDO': [],
         'OP_ARIT/OP_CARACTERE': [], 
@@ -519,6 +521,7 @@ transicao_sintatico = {
         'ENQUANTO_EXPRESSAO': ['ENQUANTO_MAISEXPRESSAO'],
         'ESCOLHA_EXPRESSAO': ['ESCOLHA_MAISEXPRESSAO'],
         'ESCOLHA_OC_EXPRESSAO': ['ESCOLHA_OC_MAISEXPRESSAO'],
+        'PARENTESES': ['FECHAPARENTESES'],
 
         'OPERANDO': [],
         'OP_ARIT/OP_CARACTERE': [], 
@@ -535,6 +538,7 @@ transicao_sintatico = {
         'ENQUANTO_EXPRESSAO': ['ENQUANTO_MAISEXPRESSAO'],
         'ESCOLHA_EXPRESSAO': ['ESCOLHA_MAISEXPRESSAO'],
         'ESCOLHA_OC_EXPRESSAO': ['ESCOLHA_OC_MAISEXPRESSAO'],
+        'PARENTESES': ['FECHAPARENTESES'],
 
         'ESCRITA': [],
         'OPERANDO': [],
@@ -833,7 +837,7 @@ def buscar_erro(simbolo, transicoes):
             return palavra
         return None
 
-def trata_erro(topo, terminal, pilha, tabela_simbolos):
+def trata_erro(topo, terminal, pilha):
     palavra_esperada = buscar_erro(topo, transicao_sintatico)
     if palavra_esperada != None:
         return f'Erro: Espera-se "{palavra_esperada}" ao invés de "{terminal}"'
