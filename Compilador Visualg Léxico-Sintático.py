@@ -426,6 +426,7 @@ transicao_sintatico = {
     'OP_REL': { 
         'OP_REL': ['OPERANDO'],
         'ATE_REL': ['ATE_OPERANDO'],
+        'MAISATE_REL': ['MAISATE_OPERANDO'],
         'ATE_PARENTESES_REL': ['ATE_PARENTESES_OPERANDO']
     },
 
@@ -768,6 +769,7 @@ transicao_sintatico = {
        
         'OPERANDO': [],
         'ATE_OPERANDO': ['ATE_COMANDOS'],
+        'MAISATE_OPERANDO': [],
         'ATE_PARENTESES_OPERANDO': [],
         'OP_ARIT/OP_CARACTERE': [], 
         'OP_ARIT': [],
@@ -781,6 +783,7 @@ transicao_sintatico = {
         'ATE_MAISEXPRESSAO': ['ATE_REL'],
 
         'FIMREPITA': ['ATE_REL'],
+        'MAISFIMREPITA': ['MAISATE_REL'],
 
         'ATE_PARENTESES_EXPRESSAO': ['ATE_PARENTESES_REL'],
         'ATE_PARENTESES_MAISEXPRESSAO': ['ATE_PARENTESES_REL'],
@@ -951,6 +954,7 @@ transicao_sintatico = {
 
         'OPERANDO': [],
         'ATE_OPERANDO': ['ATE_COMANDOS'],
+        'MAISATE_OPERANDO': [],
         'ATE_PARENTESES_OPERANDO': [],
         'VALOR_ESCOLHA': [],
         'OP_ARIT/OP_CARACTERE': [], 
@@ -1004,6 +1008,7 @@ transicao_sintatico = {
 
         'OPERANDO': [],
         'ATE_OPERANDO': ['ATE_COMANDOS'],
+        'MAISATE_OPERANDO': [],
         'ATE_PARENTESES_OPERANDO': [],
         'OP_ARIT/OP_CARACTERE': [], 
         'OP_ARIT': [], 
@@ -1052,6 +1057,7 @@ transicao_sintatico = {
         'PARENTESES': ['FECHAPARENTESES'],
         'OPERANDO': [],
         'ATE_OPERANDO': ['ATE_COMANDOS'],
+        'MAISATE_OPERANDO': [],
         'ATE_PARENTESES_OPERANDO': [],
         'OP_ARIT/OP_CARACTERE': [], 
         'OP_ARIT': [], 
@@ -1205,6 +1211,7 @@ transicao_sintatico = {
         
         'OPERANDO': [],
         'ATE_OPERANDO': ['ATE_COMANDOS'],
+        'MAISATE_OPERANDO': [],
         'ATE_PARENTESES_OPERANDO': [],
         'VALOR_ESCOLHA': [],
         'OP_ARIT/OP_CARACTERE': [], 
@@ -1554,7 +1561,8 @@ transicao_sintatico = {
         'ATE_COMANDOS': ['ATE_EXPRESSAO'],
         'ATE_MAISEXPRESSAO': ['ATE_EXPRESSAO'],
 
-        'FIMREPITA': ['ATE_EXPRESSAO']
+        'FIMREPITA': ['ATE_EXPRESSAO'],
+        'MAISFIMREPITA': [],
     },
 
     'FACA': {
