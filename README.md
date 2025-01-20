@@ -1,5 +1,7 @@
 # Compilador Visualg
-Este é um compilador desenvolvido para a linguagem VisuAlg, criado como parte de um trabalho do curso de Compiladores no Instituto Federal de São Paulo (IFSP). O projeto foca na análise léxica, sintática e semântica, identificando tokens e categorizando elementos da linguagem VisuAlg, como palavras-chave, identificadores, operadores e delimitadores. Além de realizar a análise léxica, o compilador também realiza a análise sintática, garantindo que o código esteja sintaticamente correto e por fim a análise semântica.
+Este compilador foi desenvolvido para a linguagem VisuAlg como parte de um projeto do curso de Compiladores no Instituto Federal de São Paulo (IFSP). O objetivo do projeto é abranger as etapas fundamentais de um compilador: análise léxica, sintática e semântica, além da geração de código.
+
+Na análise léxica, o compilador identifica e classifica tokens, categorizando elementos da linguagem VisuAlg, como palavras-chave, identificadores, operadores e delimitadores. Em seguida, realiza a análise sintática para verificar a correção estrutural do código, assegurando que as regras gramaticais da linguagem sejam respeitadas. Por fim, a análise semântica valida os significados no contexto do programa, preparando o terreno para a geração de código otimizado.
 
 ## **Como utilizar**
 ### **Requisitos**
