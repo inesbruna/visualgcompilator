@@ -3,6 +3,8 @@ from tkinter import scrolledtext, messagebox
 from tkinter import filedialog as fd
 import webbrowser
 import sys
+import copy
+import os  
 
 
 # --------------------------------------------------------------------------
@@ -332,8 +334,6 @@ def lexico(lista):
                 tabela_simbolos.append([palavra, 'FECHA_COLCHETE'])
             elif (palavra in ['=', '>=', '<=', '<>']):
                 tabela_simbolos.append([palavra, 'OP_REL'])
-            elif (palavra == '='):
-                tabela_simbolos.append([palavra, 'ASPAS'])
             elif (palavra == ','):
                 tabela_simbolos.append([palavra, 'OP_SEP_MESMO_TIPO'])
             elif (palavra == ';'):
@@ -501,17 +501,29 @@ transicao_sintatico = {
         'EXPRESSAO_FUNCAO1PARAMETRO_FUNCAO': ['PARENTESES', 'FUNCAO_MAISEXPRESSAO'],
         'EXPRESSAO_FUNCAO1PARAMETRO_PROCEDIMENTO': ['PARENTESES', 'PROCEDIMENTO_MAISEXPRESSAO'],
         
-        'EXPRESSAO_FUNCAO2PARAMETRO': ['PARENTESES', 'MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO': [ 'PARENTESES', 'ENQUANTO_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_PARA': [ 'PARENTESES', 'PARA_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_REPITA': [ 'PARENTESES', 'REPITA_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS': [ 'PARENTESES', 'REPITAMAIS_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_SENAO': ['PARENTESES', 'SENAO_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_SE': ['PARENTESES', 'SE_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA': [ 'PARENTESES', 'ESCOLHA_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO': [ 'PARENTESES', 'OUTROCASO_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO': ['PARENTESES', 'FUNCAO_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO': ['PARENTESES', 'PROCEDIMENTO_MAISEXPRESSAO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO': [ 'EXPRESSAO_FUNCAO2PARAMETRO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO': [ 'EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_PARA': [ 'EXPRESSAO_FUNCAO2PARAMETRO_PARA'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_REPITA': [ 'EXPRESSAO_FUNCAO2PARAMETRO_REPITA'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS': [ 'EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_SENAO': ['EXPRESSAO_FUNCAO2PARAMETRO_SENAO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_SE': ['EXPRESSAO_FUNCAO2PARAMETRO_SE'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA': [ 'EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO': [ 'EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO': ['EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO': ['EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO'],
+
+          #  '_EXPRESSAO_FUNCAO2PARAMETRO': [ '_EXPRESSAO_FUNCAO2PARAMETRO'],
+     #   '_EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO': [ '_EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_PARA': [ '_EXPRESSAO_FUNCAO2PARAMETRO_PARA'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_REPITA': [ '_EXPRESSAO_FUNCAO2PARAMETRO_REPITA'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS': [ '_EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_SENAO': ['_EXPRESSAO_FUNCAO2PARAMETRO_SENAO'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_SE': ['_EXPRESSAO_FUNCAO2PARAMETRO_SE'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA': [ '_EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO': [ '_EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO': ['_EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO': ['_EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO'],
 
  
         'ENQUANTO_EXPRESSAO' : ['ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO1PARAMETRO_ENQUANTO'],
@@ -544,17 +556,30 @@ transicao_sintatico = {
 
 
                 
-        'EXPRESSAO_FUNCAO2PARAMETRO': ['PARENTESES', 'MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO': [ 'PARENTESES', 'ENQUANTO_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_PARA': [ 'PARENTESES', 'PARA_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_REPITA': [ 'PARENTESES', 'REPITA_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS': [ 'PARENTESES', 'REPITAMAIS_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_SENAO': ['PARENTESES', 'SENAO_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_SE': ['PARENTESES', 'SE_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA': [ 'PARENTESES', 'ESCOLHA_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO': [ 'PARENTESES', 'OUTROCASO_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO': ['PARENTESES', 'FUNCAO_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO': ['PARENTESES', 'PROCEDIMENTO_MAISEXPRESSAO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO': [ 'EXPRESSAO_FUNCAO2PARAMETRO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO': [ 'EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_PARA': [ 'EXPRESSAO_FUNCAO2PARAMETRO_PARA'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_REPITA': [ 'EXPRESSAO_FUNCAO2PARAMETRO_REPITA'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS': [ 'EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_SENAO': ['EXPRESSAO_FUNCAO2PARAMETRO_SENAO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_SE': ['EXPRESSAO_FUNCAO2PARAMETRO_SE'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA': [ 'EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO': [ 'EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO': ['EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO': ['EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO'],
+
+        
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO': [ '_EXPRESSAO_FUNCAO2PARAMETRO'],
+     #   '_EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO': [ '_EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_PARA': [ '_EXPRESSAO_FUNCAO2PARAMETRO_PARA'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_REPITA': [ '_EXPRESSAO_FUNCAO2PARAMETRO_REPITA'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS': [ '_EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_SENAO': ['_EXPRESSAO_FUNCAO2PARAMETRO_SENAO'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_SE': ['_EXPRESSAO_FUNCAO2PARAMETRO_SE'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA': [ '_EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO': [ '_EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO': ['_EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO'],
+      #  '_EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO': ['_EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO'],
         
         'ENQUANTO_EXPRESSAO' : ['ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO1PARAMETRO_ENQUANTO'],
         'PARA_EXPRESSAO': ['ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO1PARAMETRO_PARA'],
@@ -585,17 +610,30 @@ transicao_sintatico = {
         'EXPRESSAO_FUNCAO1PARAMETRO_PROCEDIMENTO': ['PARENTESES', 'PROCEDIMENTO_MAISEXPRESSAO'],
 
         
-        'EXPRESSAO_FUNCAO2PARAMETRO': ['PARENTESES', 'MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO': [ 'PARENTESES', 'ENQUANTO_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_PARA': [ 'PARENTESES', 'PARA_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_REPITA': [ 'PARENTESES', 'REPITA_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS': [ 'PARENTESES', 'REPITAMAIS_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_SENAO': ['PARENTESES', 'SENAO_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_SE': ['PARENTESES', 'SE_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA': [ 'PARENTESES', 'ESCOLHA_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO': [ 'PARENTESES', 'OUTROCASO_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO': ['PARENTESES', 'FUNCAO_MAISEXPRESSAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO': ['PARENTESES', 'PROCEDIMENTO_MAISEXPRESSAO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO': [ 'EXPRESSAO_FUNCAO2PARAMETRO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO': [ 'EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_PARA': [ 'EXPRESSAO_FUNCAO2PARAMETRO_PARA'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_REPITA': [ 'EXPRESSAO_FUNCAO2PARAMETRO_REPITA'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS': [ 'EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_SENAO': ['EXPRESSAO_FUNCAO2PARAMETRO_SENAO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_SE': ['EXPRESSAO_FUNCAO2PARAMETRO_SE'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA': [ 'EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO': [ 'EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO': ['EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO': ['EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO'],
+
+        
+     #   '_EXPRESSAO_FUNCAO2PARAMETRO': [ '_EXPRESSAO_FUNCAO2PARAMETRO'],
+     #   '_EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO': [ '_EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO'],
+    #    '_EXPRESSAO_FUNCAO2PARAMETRO_PARA': [ '_EXPRESSAO_FUNCAO2PARAMETRO_PARA'],
+     #   '_EXPRESSAO_FUNCAO2PARAMETRO_REPITA': [ '_EXPRESSAO_FUNCAO2PARAMETRO_REPITA'],
+     #   '_EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS': [ '_EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS'],
+     #   '_EXPRESSAO_FUNCAO2PARAMETRO_SENAO': ['_EXPRESSAO_FUNCAO2PARAMETRO_SENAO'],
+     #   '_EXPRESSAO_FUNCAO2PARAMETRO_SE': ['_EXPRESSAO_FUNCAO2PARAMETRO_SE'],
+     #   '_EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA': [ '_EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA'],
+     #   '_EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO': [ '_EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO'],
+    #    '_EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO': ['_EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO'],
+     #   '_EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO': ['_EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO'],
 
         
         'ENQUANTO_EXPRESSAO' : ['ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO1PARAMETRO_ENQUANTO'],
@@ -637,6 +675,7 @@ transicao_sintatico = {
 
         'EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO': [ 'ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO', 'EXPRESSAO_FUNCAO1PARAMETRO_ENQUANTO'],
         'EXPRESSAO_FUNCAO2PARAMETRO_PARA': [ 'ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_PARA', 'EXPRESSAO_FUNCAO1PARAMETRO_PARA'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_REPITA': [ 'ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS', 'EXPRESSAO_FUNCAO1PARAMETRO_REPITAMAIS'],
         'EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS': [ 'ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS', 'EXPRESSAO_FUNCAO1PARAMETRO_REPITAMAIS'],
         'EXPRESSAO_FUNCAO2PARAMETRO_SENAO': ['ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_SENAO', 'EXPRESSAO_FUNCAO1PARAMETRO_SENAO'],
         'EXPRESSAO_FUNCAO2PARAMETRO_SE': ['ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_SE', 'EXPRESSAO_FUNCAO1PARAMETRO_SE'],
@@ -644,6 +683,17 @@ transicao_sintatico = {
         'EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO': [ 'ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO', 'EXPRESSAO_FUNCAO1PARAMETRO_OUTROCASO'],
         'EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO': ['ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO', 'EXPRESSAO_FUNCAO1PARAMETRO_FUNCAO'],
         'EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO': ['ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO', 'EXPRESSAO_FUNCAO1PARAMETRO_PROCEDIMENTO'],
+
+    #    '_EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO': [ 'ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO', '_EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO'],
+   #     '_EXPRESSAO_FUNCAO2PARAMETRO_PARA': [ 'ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_PARA', '_EXPRESSAO_FUNCAO2PARAMETRO_PARA'],
+  #      '_EXPRESSAO_FUNCAO2PARAMETRO_REPITA': [ 'ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS', '_EXPRESSAO_FUNCAO2PARAMETRO_REPITA'],
+   #     '_EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS': [ 'ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS', '_EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS'],
+    #    '_EXPRESSAO_FUNCAO2PARAMETRO_SENAO': ['ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_SENAO', '_EXPRESSAO_FUNCAO2PARAMETRO_SENAO'],
+    #    '_EXPRESSAO_FUNCAO2PARAMETRO_SE': ['ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_SE', '_EXPRESSAO_FUNCAO2PARAMETRO_SE'],
+   #     '_EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA': [ 'ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA', '_EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA'],
+   #     '_EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO': [ 'ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO', '_EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO'],
+   #     '_EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO': ['ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO', 'EXPRESSAO_FUNCAO1PARAMETRO_FUNCAO', '_EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO'],
+    #    '_EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO': ['ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO', 'EXPRESSAO_FUNCAO1PARAMETRO_PROCEDIMENTO', '],
               
         'ENQUANTO_EXPRESSAO' : ['ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO', 'EXPRESSAO_FUNCAO1PARAMETRO_ENQUANTO'],
         'PARA_EXPRESSAO': ['ABRINDO_PARENTESES_FUNCAO1PARAMETRO','EXPRESSAO_FUNCAO2PARAMETRO_PARA', 'EXPRESSAO_FUNCAO1PARAMETRO_PARA'],
@@ -684,17 +734,17 @@ transicao_sintatico = {
         'EXPRESSAO_FUNCAO1PARAMETRO_FUNCAO': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_FUNCAO'],
         'EXPRESSAO_FUNCAO1PARAMETRO_PROCEDIMENTO': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_PROCEDIMENTO'],
 
-        'EXPRESSAO_FUNCAO2PARAMETRO': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_ENQUANTO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_PARA': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_PARA'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_REPITA': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_REPITA'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_REPITAMAIS'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_SENAO': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_SENAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_SE': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_SE'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_ESCOLHA'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_OUTROCASO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_FUNCAO'],
-        'EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_PROCEDIMENTO'],
+        'EXPRESSAO_FUNCAO2PARAMETRO': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_COMPLEMENTAR'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_ENQUANTO_COMPLEMENTAR'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_PARA': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_PARA_COMPLEMENTAR'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_REPITA': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_REPITA_COMPLEMENTAR'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_REPITAMAIS_COMPLEMENTAR'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_SENAO': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_SENAO_COMPLEMENTAR'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_SE': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_SE_COMPLEMENTAR'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_ESCOLHA_COMPLEMENTAR'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_OUTROCASO_COMPLEMENTAR'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_FUNCAO': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_FUNCAO_COMPLEMENTAR'],
+        'EXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO': ['ABRIR_PARENTESES_RANDI', 'VALOR_INTEIRO/VARIAVEL', 'FECHA_PARENTESES_ESPECIAL_PROCEDIMENTO_COMPLEMENTAR'],
     },
 
     'VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO': {
@@ -849,6 +899,8 @@ transicao_sintatico = {
 
         'ABREPARENTESES': [],
 
+        'ABRINDO_PARENTESES_IMPORTANTE': [],
+
         'ABRIR_PARENTESES_RANDI': [ ]
     },
 
@@ -880,7 +932,8 @@ transicao_sintatico = {
 #       'MAISEXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO': [],
 
         'FECHA_PARENTESES_ANTERIOR': [],
-        'FECHAR_PARENTESES_RANDI_SITUACAO2': ['FECHA_PARENTESES_ANTERIOR'],
+        'FECHAR_PARENTESES_RANDI_SITUACAO2': ['FECHAPARENTESES'],
+        
         'ALGO_TALVEZ':[],
         'MAISESCRITA': [],
         
@@ -898,6 +951,19 @@ transicao_sintatico = {
         'FECHAR_PARENTESES_RANDI_OUTROCASO': ['OUTROCASO_MAISEXPRESSAO'],
         'FECHAR_PARENTESES_RANDI_FUNCAO': ['FUNCAO_MAISEXPRESSAO'],
         'FECHAR_PARENTESES_RANDI_PROCEDIMENTO': ['PROCEDIMENTO_MAISEXPRESSAO'],
+
+        'FECHA_PARENTESES_ESPECIAL_COMPLEMENTAR': ['MAISEXPRESSAO_FUNCAO2PARAMETRO'],
+        'FECHA_PARENTESES_ESPECIAL_ENQUANTO_COMPLEMENTAR': ['MAISEXPRESSAO_FUNCAO2PARAMETRO_ENQUANTO'],
+        'FECHA_PARENTESES_ESPECIAL_PARA_COMPLEMENTAR': ['MAISEXPRESSAO_FUNCAO2PARAMETRO_PARA'],
+        'FECHA_PARENTESES_ESPECIAL_REPITA_COMPLEMENTAR': ['MAISEXPRESSAO_FUNCAO2PARAMETRO_REPITA'],
+        'FECHA_PARENTESES_ESPECIAL_REPITAMAIS_COMPLEMENTAR': ['MAISEXPRESSAO_FUNCAO2PARAMETRO_REPITAMAIS'],
+        'FECHA_PARENTESES_ESPECIAL_SENAO_COMPLEMENTAR': ['MAISEXPRESSAO_FUNCAO2PARAMETRO_SENAO'],
+        'FECHA_PARENTESES_ESPECIAL_SE_COMPLEMENTAR': ['MAISEXPRESSAO_FUNCAO2PARAMETRO_SE'],
+        'FECHA_PARENTESES_ESPECIAL_ESCOLHA_COMPLEMENTAR': ['MAISEXPRESSAO_FUNCAO2PARAMETRO_ESCOLHA'],
+        'FECHA_PARENTESES_ESPECIAL_OUTROCASO_COMPLEMENTAR': ['MAISEXPRESSAO_FUNCAO2PARAMETRO_OUTROCASO'],
+        'FECHA_PARENTESES_ESPECIAL_FUNCAO_COMPLEMENTAR': ['MAISEXPRESSAO_FUNCAO2PARAMETRO_FUNCAO'],
+        'FECHA_PARENTESES_ESPECIAL_PROCEDIMENTO_COMPLEMENTAR': ['MAISEXPRESSAO_FUNCAO2PARAMETRO_PROCEDIMENTO'],
+
 
         'FECHA_PARENTESES_ESPECIAL': ['MAISEXPRESSAO_FUNCAO1PARAMETRO'],
         'FECHA_PARENTESES_ESPECIAL_ENQUANTO': ['MAISEXPRESSAO_FUNCAO1PARAMETRO_ENQUANTO'],
@@ -1835,6 +1901,201 @@ def sintatico(cadeia):
 
 # Compilar a parte léxica
 
+def semantico(tabela_simbolos):
+    manterVariavel = []
+
+    resultadoSemantico = ""
+    aux = "" #Variável auxiliar
+    atribuicao = ""
+    #manterTipo = ""
+    contador = 0
+    tabela_simbolos2 = []
+    tabela_simbolos3 = copy.deepcopy(tabela_simbolos)
+    #compilarLexico()
+    area_resultado.config(state=tk.NORMAL)
+    area_resultado.delete("1.0", tk.END)
+    for simbolo in tabela_simbolos:
+    #area_resultado.insert(tk.END, f"{simbolo[0]}: {simbolo[1]}\n")
+    #variavelSemantico = simbolo[0]
+
+                
+        if((contador == 1 or contador == 2) and simbolo[0] != "," and simbolo[0] != ":"):
+            manterVariavel.append(simbolo[0])
+            contador = 2
+
+        if(contador == 3):
+            if(simbolo[0] == "inteiro" or simbolo[0] == "real" or simbolo[0] == "caractere" or simbolo[0] == "logico"):
+                contador = 0
+                manterTipo = simbolo[0]
+                
+                for i in manterVariavel:
+                    for j in tabela_simbolos2:
+                        if(i in j[0]):
+                            #3) Se não houve a redefinição de tipo de uma variável
+                            resultadoSemantico += "\nRecusado:\nVariável redefinida: " + i
+                            break
+                    tabela_simbolos2.append([i, manterTipo])
+                manterVariavel = [ ]
+
+
+        if(contador == 2 and simbolo[0] == ":"):
+            contador = 3
+      
+        if(contador == 0 and simbolo[0] == "var"):
+            contador = 1
+
+        if(simbolo[0] == "inicio"):
+            contador = 4
+
+        if(contador == 4 and simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"):
+            tipoVariavel = simbolo[1]    
+            for j in tabela_simbolos2:
+                if(simbolo[0] in j):
+                    aux = "Ok"    
+            if(aux == ""):
+                #1) Se uma variável foi definida
+                resultadoSemantico += "\nRecusado:\nVariável não definida: " + simbolo[0]
+            aux = ""
+    contadorAux = 0
+    contadorAux2 = 0
+    anteriorOperando = ""
+    atualOperando = ""
+    tipo = ""
+    tipo2 = ""
+    naoinicio = 0
+    correto = ""
+    tipo3 = ""
+    listaPosicoes = [ ] 
+    contandoPosicao = 0
+    Posicao = 0
+    primeiraAtribuicao = 0
+    for simbolo in tabela_simbolos:
+        contandoPosicao = contandoPosicao + 1
+        
+        if(primeiraAtribuicao == 1 and simbolo[0] != "<-" and simbolo[1] != "OP_ARIT" and simbolo[1] != "OP_ARIT/OP_CARACTERE" and simbolo[1] != "MOD" 
+            and simbolo[1] != "ABRE_PARENTESES" and simbolo[1] != "FECHA_PARENTESES" and simbolo[1] != "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"
+            and simbolo[1] != "VALOR_INT" and simbolo[1] != "ABS" and simbolo[1] != "RAIZQ" and simbolo[1] != "RANDI" and simbolo[1] != "EXP" and simbolo[1] != "QUAD"
+            and simbolo[1] != "NOME_ALGORITMO/VALOR_LITERAL" and simbolo[1] != "VALOR_LITERAL" and simbolo[1] != "VERDADEIRO" and simbolo[1] != "FALSO" and simbolo[1] != "VALOR_REAL"
+            and simbolo[1] != "E" and simbolo[1] != "XOU" and simbolo[1] != "OU" and simbolo[1] != "NAO" and simbolo[1] != "OP_SEP_DIFERENTE_TIPO" and simbolo[1] != "OP_SEP_MESMO_TIPO"):
+            Posicao = contandoPosicao - 1
+            tabela_simbolos3.insert(Posicao, ["---", "---"])
+            listaPosicoes.append(Posicao)
+            contandoPosicao = contandoPosicao + 1
+            primeiraAtribuicao = 0
+        if(primeiraAtribuicao == 1 and simbolo[0] == "<-"):
+            Posicao = contandoPosicao - 2
+            tabela_simbolos3.insert(Posicao, ["---", "---"]) #Não pode ser ["", ""], 
+            listaPosicoes.append(Posicao)
+            contandoPosicao = contandoPosicao + 1
+            primeiraAtribuicao = 0
+        if(primeiraAtribuicao == 0 and simbolo[0] == "<-"):
+            primeiraAtribuicao = 1
+
+    #2) Se o tipo da variável é condizente com a operação  na atribuição ( se a variável é inteira então deverá receber um valor inteiro, se for real um valor real)        
+    for simbolo in tabela_simbolos3:
+        if(simbolo[0] == "inicio" and contador == 4):
+            contador = 5
+        if(contador == 5):
+            if(simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"):
+                for j in tabela_simbolos2:
+                    if(simbolo[0] in j):
+                        variavel = simbolo[0]
+                        tipo = j[1]
+        if(simbolo[0] == "<-"):
+            contador = 6
+        if(contador == 6 and tipo == "inteiro" and 
+            ( simbolo[1] == "RAIZQ" or  simbolo[1] == "EXP"  
+            or simbolo[1] == "NOME_ALGORITMO/VALOR_LITERAL" or simbolo[1] == "VALOR_LITERAL" or simbolo[1] == "VERDADEIRO" or simbolo[1] == "FALSO" or simbolo[1] == "VALOR_REAL"
+            or simbolo[1] == "E" or simbolo[1] == "OU" or simbolo[1] == "XOU" or simbolo[1] == "NAO"
+                )
+            ):
+            resultadoSemantico += "\nRecusado:\nEsperado valor inteiro,  erro na atribuição para variável: " + variavel + ", erro em: " + simbolo[0]
+        if(contador == 6 and tipo == "inteiro" and  simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"):
+            for j in tabela_simbolos2:
+                    if(simbolo[0] in j):
+                        tipo2 = j[1]
+                        if(tipo2 != "inteiro"):
+                            resultadoSemantico += "\nRecusado:\nEsperado valor inteiro,  erro na atribuição para variável: " + variavel + ", erro em: " + simbolo[0]
+                            
+    
+        if(contador == 6 and tipo == "logico" and 
+            ( simbolo[1] == "RAIZQ" or  simbolo[1] == "EXP" or simbolo[1] == "RANDI" or simbolo[1] == "ABS" or simbolo[1] == "QUAD" or
+                simbolo[1] == "OP_ARIT" or simbolo[1] == "OP_ARIT/OP_CARACTERE" or simbolo[1] == "MOD" or
+            simbolo[1] == "NOME_ALGORITMO/VALOR_LITERAL" or simbolo[1] == "VALOR_LITERAL" or simbolo[1] == "VALOR_REAL" or simbolo[1] == "VALOR_INT"
+                )
+            ):
+            resultadoSemantico += "\nRecusado:\nEsperado valor logico,  erro na atribuição para variável: " + variavel + ", erro em: " + simbolo[0]
+        if(contador == 6 and tipo == "logico" and  simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"):
+            for j in tabela_simbolos2:
+                    if(simbolo[0] in j):
+                        tipo2 = j[1]
+                        if(tipo2 != "logico"):
+                            resultadoSemantico += "\nRecusado:\nEsperado valor logico,  erro na atribuição para variável: " + variavel + ", erro em: " + simbolo[0]
+                      
+
+
+        if(contador == 6 and tipo == "real" and 
+            ( simbolo[1] == "NOME_ALGORITMO/VALOR_LITERAL" or simbolo[1] == "VALOR_LITERAL" 
+            or simbolo[1] == "E" or simbolo[1] == "OU" or simbolo[1] == "XOU" or simbolo[1] == "NAO" or simbolo[1] == "VERDADEIRO" or simbolo[1] == "FALSO"
+                )
+            ):
+            resultadoSemantico += "\nRecusado:\nEsperado valor real,  erro na atribuição para variável: " + variavel + ", erro em: " + simbolo[0]
+        if(contador == 6 and tipo == "real" and simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"):
+            for j in tabela_simbolos2:
+                    if(simbolo[0] in j):
+                        tipo2 = j[1]
+                        if(tipo2 != "real" and tipo2 != "inteiro"):
+                            resultadoSemantico += "\nRecusado:\nEsperado valor real, erro na atribuição para variável: " + variavel + ", erro em: " + simbolo[0]
+                           
+
+
+        if(contador == 6 and tipo == "caractere" and 
+            (simbolo[1] == "E" or simbolo[1] == "OU" or simbolo[1] == "XOU" or simbolo[1] == "NAO" or simbolo[1] == "VERDADEIRO" or simbolo[1] == "FALSO"
+                or simbolo[1] == "VALOR_REAL" or simbolo[1] == "VALOR_INT" or simbolo[1] == "OP_ARIT" or simbolo[1] == "MOD" or simbolo[1] == "RAIZQ" or
+                simbolo[1] == "EXP" or simbolo[1] == "RANDI" or simbolo[1] == "ABS" or simbolo[1] == "QUAD"
+                )
+            ):
+            resultadoSemantico += "\nRecusado:\nEsperado valor do tipo caractere, erro na atribuição para variável: " + variavel + ", erro em: " + simbolo[0]
+        if(contador == 6 and tipo == "caractere" and simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"):
+            for j in tabela_simbolos2:
+                    if(simbolo[0] in j):
+                        tipo2 = j[1]
+                        if(tipo2 != "caractere"):
+                            resultadoSemantico += "\nRecusado:\nEsperado valor do tipo caractere, erro na atribuição para variável: " + variavel + ", erro em: " + simbolo[0]     
+                                
+        if(contador == 6 and simbolo[1] == "---" and simbolo[0] == "---"):
+            contador = 5
+            tipo = ""
+            tipo2 = ""
+                            
+               
+        
+      
+                            
+         
+            
+          
+    area_resultado.config(state=tk.DISABLED)
+
+
+      
+
+
+    if(resultadoSemantico == ""):
+        resultadoSemantico = "Aceito"
+    
+
+    area_resultado.config(state=tk.NORMAL)
+    area_resultado.delete("1.0", tk.END)
+    area_resultado.insert(tk.END, f"Resultado: {resultadoSemantico}")
+    area_resultado.config(state=tk.DISABLED)
+
+    return resultadoSemantico
+
+   
+        
+    
+
 def compilarLexico():
     codigo = editor_texto.get("1.0", tk.END).strip()
     if not codigo:
@@ -1849,12 +2110,13 @@ def compilarLexico():
             return None
         tabela_simbolos.extend(resultado)
 
-    # Exibir resultado na área de saída
+     #Exibir resultado na área de saída
     area_resultado.config(state=tk.NORMAL)
     area_resultado.delete("1.0", tk.END)
     for simbolo in tabela_simbolos:
         area_resultado.insert(tk.END, f"{simbolo[0]}: {simbolo[1]}\n")
     area_resultado.config(state=tk.DISABLED)
+  
     
     return tabela_simbolos # Retorna a tabela de símbolos para o sintático
 
@@ -1876,6 +2138,1256 @@ def compilar():
     area_resultado.delete("1.0", tk.END)
     area_resultado.insert(tk.END, f"Resultado: {resultado}")
     area_resultado.config(state=tk.DISABLED)
+
+    resultadoSemantico = ""
+    #Semantico
+    if(resultado == "aceito."):
+        resultadoSemantico = semantico(tabela_simbolos)
+    if(resultadoSemantico == "Aceito"):
+        geradorDeCodigo()
+        area_resultado.config(state=tk.NORMAL)
+        area_resultado.delete("1.0", tk.END)
+        area_resultado.insert(tk.END, f"Resultado: {resultadoSemantico}")
+        area_resultado.config(state=tk.DISABLED)
+
+    
+    
+        
+
+def compilarLexicoESemantico():
+    tabela_simbolos = compilarLexico()  # Gera a tabela de símbolos a partir do léxico
+    if tabela_simbolos is None:
+        return
+    
+    # Cria uma cadeia de entrada para o sintático a partir dos tipos dos tokens
+    cadeia = [simbolo[1] for simbolo in tabela_simbolos] # List Comprehension
+    
+    resultado = sintatico(cadeia)
+
+    # Exibir o resultado
+    area_resultado.config(state=tk.NORMAL)
+    area_resultado.delete("1.0", tk.END)
+    area_resultado.insert(tk.END, f"Resultado: {resultado}")
+    area_resultado.config(state=tk.DISABLED)
+
+        
+    semantico(tabela_simbolos)
+
+
+def geradorDeCodigo():
+    tabela_simbolos = compilarLexico()  # Gera a tabela de símbolos a partir do léxico
+    if tabela_simbolos is None:
+        return
+    
+    # Cria uma cadeia de entrada para o sintático a partir dos tipos dos tokens
+    #cadeia = [simbolo[1] for simbolo in tabela_simbolos] # List Comprehension
+    
+    #resultado = sintatico(cadeia)
+
+    algoritmo = ""
+
+    # Exibir o resultado
+    
+    auxAlgoritmo = 0
+    auxVariavel = 0
+    texto_sem_aspas = ""
+    tabela_simbolos3 = copy.deepcopy(tabela_simbolos)
+    listaPosicoes = [ ] 
+    contandoPosicao = 0
+    Posicao = 0
+    primeiraAtribuicaoOuFuncaoOuProcedimento = 0
+    primeiroVar = 0
+    primeiroRetorne = 0
+    primeiroCaso = 0
+
+    manterVariavel = [ ]
+    tabela_simbolos2 = [ ]
+    simboloAnterior = ""
+    contadorRegulador = 0
+    dentroDeAlgoritmo = 0
+    for simbolo in tabela_simbolos:
+    #area_resultado.insert(tk.END, f"{simbolo[0]}: {simbolo[1]}\n")
+    #variavelSemantico = simbolo[0]
+
+        if(simbolo[0] == "algoritmo"):
+            dentroDeAlgoritmo = 1
+                
+        if((contadorRegulador == 1 or contadorRegulador == 2) and simbolo[0] != "," and simbolo[0] != ":" and dentroDeAlgoritmo == 1):
+            manterVariavel.append(simbolo[0])
+            contadorRegulador = 2
+
+        if(contadorRegulador == 3):
+            if((simbolo[0] == "inteiro" or simbolo[0] == "real" or simbolo[0] == "caractere" or simbolo[0] == "logico") and dentroDeAlgoritmo == 1):
+                contadorRegulador = 0
+                manterTipo = simbolo[0]
+                
+                for i in manterVariavel:
+                    tabela_simbolos2.append([i, manterTipo])
+                manterVariavel = [ ]
+
+        
+        if(contadorRegulador == 2 and simbolo[0] == ":" and dentroDeAlgoritmo == 1):
+            contadorRegulador = 3
+      
+        if(contadorRegulador == 0 and simbolo[0] == "var" and dentroDeAlgoritmo == 1):
+            contadorRegulador = 1
+
+        if(simbolo[0] == "inicio" and dentroDeAlgoritmo == 1):
+            contadorRegulador = 4
+
+    
+    for simbolo in tabela_simbolos:
+        contandoPosicao = contandoPosicao + 1
+        if(primeiraAtribuicaoOuFuncaoOuProcedimento == 1 and simbolo[0] != "<-" and simbolo[1] != "OP_ARIT" and simbolo[1] != "OP_ARIT/OP_CARACTERE" and simbolo[1] != "MOD" 
+            and simbolo[1] != "ABRE_PARENTESES" and simbolo[1] != "FECHA_PARENTESES" and simbolo[1] != "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"
+            and simbolo[1] != "VALOR_INT" and simbolo[1] != "ABS" and simbolo[1] != "RAIZQ" and simbolo[1] != "RANDI" and simbolo[1] != "EXP" and simbolo[1] != "QUAD"
+            and simbolo[1] != "NOME_ALGORITMO/VALOR_LITERAL" and simbolo[1] != "VALOR_LITERAL" and simbolo[1] != "VERDADEIRO" and simbolo[1] != "FALSO" and simbolo[1] != "VALOR_REAL"
+            and simbolo[1] != "E" and simbolo[1] != "XOU" and simbolo[1] != "OU" and simbolo[1] != "NAO" and simbolo[1] != "OP_SEP_DIFERENTE_TIPO" and simbolo[1] != "OP_SEP_MESMO_TIPO"):
+            Posicao = contandoPosicao - 1
+            tabela_simbolos3.insert(Posicao, ["---", "---"])
+            listaPosicoes.append(Posicao)
+            contandoPosicao = contandoPosicao + 1
+            primeiraAtribuicaoOuFuncaoOuProcedimento = 0
+        if(primeiraAtribuicaoOuFuncaoOuProcedimento == 1 and simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO" and (simboloAnterior == "FECHA_PARENTESES" or
+                                                                                                       simboloAnterior == "VERDADEIRO" or simboloAnterior == "NOME_ALGORITMO/VALOR_LITERAL"
+                                                                                                       or simboloAnterior == "FALSO" or simboloAnterior == "VALOR_REAL" or
+                                                                                                       simboloAnterior == "VALOR_INT" or simboloAnterior == "VALOR_LITERAL" or
+                                                                                                       simboloAnterior == "OP_SEP_DIFERENTE_TIPO" or simboloAnterior == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO")):   
+            Posicao = contandoPosicao - 1
+            tabela_simbolos3.insert(Posicao, ["---", "---"]) #Não pode ser ["", ""], 
+            listaPosicoes.append(Posicao)
+            contandoPosicao = contandoPosicao + 1
+            primeiraAtribuicaoOuFuncaoOuProcedimento = 0
+        if(primeiraAtribuicaoOuFuncaoOuProcedimento == 0  and simbolo[0] == "<-" or ( ( ( simboloAnterior == "FECHA_PARENTESES"  or simboloAnterior == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO" or
+                                                              simboloAnterior == "VERDADEIRO" or simboloAnterior == "NOME_ALGORITMO/VALOR_LITERAL"
+                                                                                                       or simboloAnterior == "FALSO" or simboloAnterior == "VALOR_REAL" or
+                                                                                                       simboloAnterior == "VALOR_INT" or simboloAnterior == "VALOR_LITERAL" 
+                                                                                                        ) or ( simboloAnterior != "<-" and simboloAnterior != "OP_ARIT"
+                                                                                                                                                         and simboloAnterior != "OP_ARIT/OP_CARACTERE" and
+                                                                                                                                                         simboloAnterior != "MOD" and simboloAnterior != "ABRE_PARENTESES"  
+            and simboloAnterior != "ABS" and simboloAnterior != "RAIZQ" and simboloAnterior != "RANDI" and simboloAnterior != "EXP" and simboloAnterior != "QUAD"
+                                                            and simboloAnterior != "OP_REL"
+                                                                                                               and simboloAnterior != "PARA"
+                                                                                                                    and simboloAnterior != "DE"
+                                                                                                               and simboloAnterior != "ATE"
+                                                                                                               and simboloAnterior != "SE"
+                                                                                                               and simboloAnterior != "ENQUANTO"
+                                                                                                               and simboloAnterior != "CASO"
+                                                                                                               and simboloAnterior != "ESCOLHA"
+            and simboloAnterior != "E" and simboloAnterior != "XOU" and simboloAnterior != "OU" and simboloAnterior != "NAO" and simboloAnterior != "OP_SEP_DIFERENTE_TIPO" and simboloAnterior != "OP_SEP_MESMO_TIPO") )
+            and simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"
+                                                              )):
+            primeiraAtribuicaoOuFuncaoOuProcedimento = 1
+ 
+
+        
+            
+        if(primeiroVar == 1 and simbolo[0] == "var"):
+             Posicao = contandoPosicao - 1
+             tabela_simbolos3.insert(Posicao, ["---", "---"])
+             listaPosicoes.append(Posicao)
+             contandoPosicao = contandoPosicao + 1
+             primeiroVar = 0
+        if(primeiroVar == 0 and simbolo[0] == "var"):
+            primeiroVar = 1
+        if(primeiroRetorne == 1 and simbolo[0] != "<-" and simbolo[1] != "OP_ARIT" and simbolo[1] != "OP_ARIT/OP_CARACTERE" and simbolo[1] != "MOD" 
+            and simbolo[1] != "ABRE_PARENTESES" and simbolo[1] != "FECHA_PARENTESES" and simbolo[1] != "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"
+            and simbolo[1] != "VALOR_INT" and simbolo[1] != "ABS" and simbolo[1] != "RAIZQ" and simbolo[1] != "RANDI" and simbolo[1] != "EXP" and simbolo[1] != "QUAD"
+            and simbolo[1] != "NOME_ALGORITMO/VALOR_LITERAL" and simbolo[1] != "VALOR_LITERAL" and simbolo[1] != "VERDADEIRO" and simbolo[1] != "FALSO" and simbolo[1] != "VALOR_REAL"
+            and simbolo[1] != "E" and simbolo[1] != "XOU" and simbolo[1] != "OU" and simbolo[1] != "NAO" and simbolo[1] != "OP_SEP_DIFERENTE_TIPO" and simbolo[1] != "OP_SEP_MESMO_TIPO"):
+            Posicao = contandoPosicao - 1
+            tabela_simbolos3.insert(Posicao, ["---", "---"])
+            listaPosicoes.append(Posicao)
+            contandoPosicao = contandoPosicao + 1
+            primeiroRetorne = 0
+
+        if(primeiroRetorne == 1 and simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO" and (simboloAnterior == "FECHA_PARENTESES" or
+                                                                                                       simboloAnterior == "VERDADEIRO" or simboloAnterior == "NOME_ALGORITMO/VALOR_LITERAL"
+                                                                                                       or simboloAnterior == "FALSO" or simboloAnterior == "VALOR_REAL" or
+                                                                                                       simboloAnterior == "VALOR_INT" or simboloAnterior == "VALOR_LITERAL" or
+                                                                                                       simboloAnterior == "OP_SEP_DIFERENTE_TIPO" or simboloAnterior == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO")):
+            Posicao = contandoPosicao - 1
+            tabela_simbolos3.insert(Posicao, ["---", "---"]) 
+            listaPosicoes.append(Posicao)
+            contandoPosicao = contandoPosicao + 1
+            primeiroRetorne = 0
+        
+        if(primeiroRetorne == 0 and simbolo[0] == "retorne"):
+            primeiroRetorne = 1
+        if(primeiroCaso == 1 and simbolo[0] != "<-" and simbolo[1] != "OP_ARIT" and simbolo[1] != "OP_ARIT/OP_CARACTERE" and simbolo[1] != "MOD" 
+            and simbolo[1] != "ABRE_PARENTESES" and simbolo[1] != "FECHA_PARENTESES" and simbolo[1] != "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"
+            and simbolo[1] != "VALOR_INT" and simbolo[1] != "ABS" and simbolo[1] != "RAIZQ" and simbolo[1] != "RANDI" and simbolo[1] != "EXP" and simbolo[1] != "QUAD"
+            and simbolo[1] != "NOME_ALGORITMO/VALOR_LITERAL" and simbolo[1] != "VALOR_LITERAL" and simbolo[1] != "VERDADEIRO" and simbolo[1] != "FALSO" and simbolo[1] != "VALOR_REAL"
+            and simbolo[1] != "E" and simbolo[1] != "XOU" and simbolo[1] != "OU" and simbolo[1] != "NAO" and simbolo[1] != "OP_SEP_DIFERENTE_TIPO" and simbolo[1] != "OP_SEP_MESMO_TIPO"):
+            Posicao = contandoPosicao - 1
+            tabela_simbolos3.insert(Posicao, ["-----", "-----"])
+            listaPosicoes.append(Posicao)
+            contandoPosicao = contandoPosicao + 1
+            primeiroCaso = 0
+        if(primeiroCaso == 1 and simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO" and (simboloAnterior == "FECHA_PARENTESES" or
+                                                                                                       simboloAnterior == "VERDADEIRO" or simboloAnterior == "NOME_ALGORITMO/VALOR_LITERAL"
+                                                                                                       or simboloAnterior == "FALSO" or simboloAnterior == "VALOR_REAL" or
+                                                                                                       simboloAnterior == "VALOR_INT" or simboloAnterior == "VALOR_LITERAL" or
+                                                                                                       simboloAnterior == "OP_SEP_DIFERENTE_TIPO" or simboloAnterior == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO")):
+            Posicao = contandoPosicao - 1
+            tabela_simbolos3.insert(Posicao, ["-----", "-----"]) 
+            listaPosicoes.append(Posicao)
+            
+                
+            contandoPosicao = contandoPosicao + 1
+            primeiroCaso = 0
+            
+        
+            
+                                                                                                
+        if(primeiroCaso == 0 and simbolo[0] == "caso"):
+            primeiroCaso = 1
+        simboloAnterior = simbolo[1]
+            
+
+    algoritmoFinal = ""
+    tipoDaVariavel = ""
+    variavelDeclarada = ""
+    formarDeclaracao = ""
+    iniciou = 0
+    novoFor = 0
+    manterVariavelFor = ""
+    manterVariavel2For = ""
+    manterVariavel3For = ""
+    passoOuNao = 0
+    estaEmFor = 0
+    ateRepita = 0
+    ateFor = 0
+    valorAnterior = ""
+    primeiroValor = 0
+    primeiroValorAux = 0
+    algoritmoAuxPrimeiroValor = ""
+    facaEnquanto = 0
+    escrita = 0
+    #Indicar se precisará acrescentar biblioteca import java.util.Random;
+    TemRandi = 0
+    algoritmoIntermediario = ""
+    algoritmoIntermediario2 = ""
+    algoritmoIntermediario3 = ""
+    positivoOuNao = ""
+    novoEscolha = 0
+    contarParenteses = 0
+    listaParenteses = []
+    quantosParenteses = 0
+    quantosQuad = 0
+
+    lendoValor = 0
+    verTipo = ""
+    FuncaoSim = 0
+    FuncaoDeclaracao = 0
+    irMantendo = ""
+    irMantendoMelhor = ""
+    verTipoFuncao = 0
+    TemParametros = 0
+    tipoDaFuncao = ""
+    tipoDaVariavelDaFuncaoPresente = 0
+    algoritmoFinalParteFuncaoOuProcedimento = ""
+    nomeDaFuncao = ""
+    regularDeclaracaoFuncao = 0
+    adicionarParenteses = 0
+
+    regularDeclaracaoProcedimento = 0
+    ProcedimentoSim = 0
+    ProcedimentoDeclaracao = 0
+    nomeDoProcedimento = ""
+    tipoDaVariavelDoProcedimentoPresente = 0
+    for simbolo in tabela_simbolos3:
+        if(primeiroValor == 1 and algoritmoAuxPrimeiroValor == ""):
+            primeiroValor = 0
+        if(primeiroValor == 0 and ateRepita == 1 and ( simbolo[0] == "FALSO" or simbolo[0] == "VERDADEIRO" )):
+            primeiroValor = 1
+        if(primeiroValor == 0 and ateRepita == 1 and simbolo[0] != "FALSO" and simbolo[0] != "VERDADEIRO" ):
+            primeiroValorAux = 1
+        if(simbolo[0] == "funcao"):
+            FuncaoSim = 1
+            FuncaoDeclaracao = 1
+
+        if(simbolo[0] == "procedimento"):
+            ProcedimentoSim = 1
+            ProcedimentoDeclaracao = 1
+
+        if(ProcedimentoSim == 1 and ProcedimentoDeclaracao == 1 and simbolo[0] != "procedimento"):
+            if(simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO" and TemParametros == 0):
+                nomeDoProcedimento = simbolo[0]
+            if(simbolo[0] == "("):
+                TemParametros = 1
+                irMantendoMelhor += " " + "(" + " "
+                irMantendo = ""
+            if(simbolo[0] == ";" and TemParametros == 1):
+                irMantendoMelhor += ","
+            elif(simbolo[0] == "var" and TemParametros == 1):
+                irMantendo += ""
+            elif((simbolo[0] == "---" or simbolo[0] == "(") and TemParametros == 1):
+                irMantendo += ""
+            elif(simbolo[0] == ":" and TemParametros == 1):
+                irMantendo += ""
+                tipoDaVariavelDoProcedimentoPresente = 1
+            elif(TemParametros == 1 and  tipoDaVariavelDoProcedimentoPresente == 0 and simbolo[0] != ")" and simbolo[0] != ":"):
+                irMantendo += " " + simbolo[0] + " "
+            if(simbolo[0] == "var" or simbolo[0] == "inicio" and TemParametros == 0 ):
+                algoritmoFinalParteFuncaoOuProcedimento += "static void " + nomeDoProcedimento + "( )\n"
+                ProcedimentoDeclaracao = 0
+            if(tipoDaVariavelDoProcedimentoPresente == 1  and simbolo[0] != ")" and (simbolo[0] == "inteiro" or simbolo[0] == "real" or simbolo[0] == "logico" or simbolo[0] == "caractere" )):
+                palavras = irMantendo.split()
+                for palavra in palavras:
+                    if(simbolo[0] == "inteiro" and palavra != ","):
+                        irMantendoMelhor += " int " + palavra
+                    if(simbolo[0] == "real" and palavra != ","):
+                        irMantendoMelhor += " double " + palavra
+                    if(simbolo[0] == "caractere" and palavra != ","):
+                        irMantendoMelhor += " String " + palavra
+                    if(simbolo[0] == "logico" and palavra != ","):
+                        irMantendoMelhor += " boolean " + palavra
+                    if(palavra == ","):
+                        irMantendoMelhor += ", "    
+                tipoDaVariavelDoProcedimentoPresente = 0
+                irMantendo = ""
+            if(simbolo[0] == ")"):
+                irMantendoMelhor += " ) "
+                algoritmoFinalParteFuncaoOuProcedimento += "static void " + nomeDoProcedimento + " " + irMantendoMelhor
+                irMantendoMelhor = ""
+                irMantendo = ""
+                nomeDoProcedimento = ""
+                ProcedimentoDeclaracao = 0
+                tipoDaVariavelDoProcedimentoPresente = 0
+                TemParametros = 0
+
+                
+        if(FuncaoSim == 1 and FuncaoDeclaracao == 1 and simbolo[0] != "funcao"):
+            if(simbolo[0] == ":" and TemParametros == 0):
+                verTipoFuncao = 1
+                adicionarParenteses = 1
+            if(simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO" and TemParametros == 0):
+                nomeDaFuncao = simbolo[0]
+            if(simbolo[0] == "("):
+                TemParametros = 1
+                irMantendoMelhor += " " + "(" + " "
+                irMantendo = ""
+            if(simbolo[0] == ";" and TemParametros == 1):
+                irMantendoMelhor += ","
+            elif(simbolo[0] == "var" and TemParametros == 1):
+                irMantendo += ""
+            elif((simbolo[0] == "---" or simbolo[0] == "(") and TemParametros == 1):
+                irMantendo += ""
+            elif(simbolo[0] == ":" and TemParametros == 1 and verTipoFuncao == 0):
+                irMantendo += ""
+                tipoDaVariavelDaFuncaoPresente = 1
+            elif(TemParametros == 1 and  tipoDaVariavelDaFuncaoPresente == 0 and simbolo[0] != ")" and simbolo[0] != ":"):
+                irMantendo += " " + simbolo[0] + " "
+                
+            if(tipoDaVariavelDaFuncaoPresente == 1  and simbolo[0] != ")" and (simbolo[0] == "inteiro" or simbolo[0] == "real" or simbolo[0] == "logico" or simbolo[0] == "caractere" )):
+                palavras = irMantendo.split()
+                for palavra in palavras:
+                    if(simbolo[0] == "inteiro" and palavra != ","):
+                        irMantendoMelhor += " int " + palavra 
+                    if(simbolo[0] == "real" and palavra != ","):
+                        irMantendoMelhor += " double " + palavra
+                    if(simbolo[0] == "caractere" and palavra != "," ):
+                        irMantendoMelhor += " String " + palavra
+                    if(simbolo[0] == "logico" and palavra != ","):
+                        irMantendoMelhor += " boolean " + palavra
+                    if(palavra == ","):
+                        irMantendoMelhor += ", "        
+                tipoDaVariavelDaFuncaoPresente = 0
+                irMantendo = ""    
+            if(simbolo[0] == ")"):
+                irMantendoMelhor += " ) "
+                verTipoFuncao = 1
+            if(verTipoFuncao == 1 and (simbolo[0] == "inteiro" or simbolo[0] == "real" or simbolo[0] == "logico" or simbolo[0] == "caractere" )):
+                tipoDaFuncao = simbolo[0]
+                if(tipoDaFuncao == "inteiro"):
+                    if(adicionarParenteses == 1):
+                        algoritmoFinalParteFuncaoOuProcedimento += "\nstatic int " + nomeDaFuncao + "( ) " + irMantendoMelhor
+                        adicionarParenteses = 0
+                    else:
+                        algoritmoFinalParteFuncaoOuProcedimento += "\nstatic int " + nomeDaFuncao + irMantendoMelhor        
+                if(tipoDaFuncao == "real"):
+                    if(adicionarParenteses == 1):
+                        algoritmoFinalParteFuncaoOuProcedimento += "\nstatic double " + nomeDaFuncao  + "( ) " + irMantendoMelhor
+                        adicionarParenteses = 0
+                    else:
+                        algoritmoFinalParteFuncaoOuProcedimento += "\nstatic double " + nomeDaFuncao + irMantendoMelhor
+                if(tipoDaFuncao == "logico"):
+                    if(adicionarParenteses == 1):
+                        algoritmoFinalParteFuncaoOuProcedimento += "\nstatic boolean " + nomeDaFuncao + "( ) " + irMantendoMelhor
+                        adicionarParenteses = 0
+                    else:
+                        algoritmoFinalParteFuncaoOuProcedimento += "\nstatic boolean " + nomeDaFuncao + irMantendoMelhor
+                if(tipoDaFuncao == "caractere"):
+                    if(adicionarParenteses == 1):
+                        algoritmoFinalParteFuncaoOuProcedimento += "\nstatic String " + nomeDaFuncao + "( ) " + irMantendoMelhor
+                        adicionarParenteses = 0
+                    else:
+                        algoritmoFinalParteFuncaoOuProcedimento += "\nstatic String " + nomeDaFuncao + irMantendoMelhor
+                        
+
+                irMantendoMelhor = ""
+                irMantendo = ""
+                tipoDaFuncao = ""
+                nomeDaFuncao = ""
+                verTipoFuncao = 0
+                FuncaoDeclaracao = 0
+                tipoDaVariavelDaFuncaoPresente = 0
+                TemParametros = 0
+
+       
+        
+        
+               
+        if(simbolo[0] == "algoritmo"):
+            algoritmo += "public class "
+            auxAlgoritmo = 1
+            FuncaoSim = 0
+        if(auxAlgoritmo == 1 and simbolo[1] == "NOME_ALGORITMO/VALOR_LITERAL"):
+            testo_com_aspas = simbolo[0]
+            texto_sem_aspas = testo_com_aspas[1:-1] #Nome do arquivo
+            algoritmo += texto_sem_aspas + " {\n"
+            auxAlgoritmo = 0
+        if(simbolo[0] == "var" and FuncaoSim == 0 and ProcedimentoSim == 0):
+            auxVariavel = 1
+            tipoDaVariavel += " static "
+        if(simbolo[0] == "var" and FuncaoSim == 1 and FuncaoDeclaracao == 0):
+            regularDeclaracaoFuncao = 1
+        if(simbolo[0] == "var" and ProcedimentoSim == 1 and ProcedimentoDeclaracao == 0):
+            regularDeclaracaoProcedimento = 1
+        if(auxVariavel == 1):
+            if(simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO" or simbolo[0] == ","):
+                variavelDeclarada += simbolo[0] + " "
+            if(simbolo[0] == "inteiro"):
+                tipoDaVariavel += "int"
+                formarDeclaracao += tipoDaVariavel + " " + variavelDeclarada + ";\n"
+                variavelDeclarada = ""
+                tipoDaVariavel = ""
+                auxVariavel = 0
+            if(simbolo[0] == "real"):
+                tipoDaVariavel += "double"
+                formarDeclaracao += tipoDaVariavel + " " + variavelDeclarada + ";\n"
+                variavelDeclarada = ""
+                tipoDaVariavel = ""
+                auxVariavel = 0
+            if(simbolo[0] == "logico"):
+                tipoDaVariavel += "boolean"
+                formarDeclaracao += tipoDaVariavel + " " + variavelDeclarada + ";\n"
+                variavelDeclarada = ""
+                tipoDaVariavel = ""
+                auxVariavel = 0
+            if(simbolo[0] == "caractere"):
+                tipoDaVariavel += "String"
+                formarDeclaracao += tipoDaVariavel + " " + variavelDeclarada + ";\n"
+                variavelDeclarada = ""
+                tipoDaVariavel = ""
+                auxVariavel = 0
+
+        if(regularDeclaracaoFuncao == 1):
+            if(simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO" or simbolo[0] == ","):
+                variavelDeclarada += simbolo[0] + " "
+            if(simbolo[0] == "inteiro"):
+                tipoDaVariavel += "int"
+                formarDeclaracao += tipoDaVariavel + " " + variavelDeclarada + ";\n"
+                variavelDeclarada = ""
+                tipoDaVariavel = ""
+                regularDeclaracaoFuncao = 0
+            if(simbolo[0] == "real"):
+                tipoDaVariavel += "double"
+                formarDeclaracao += tipoDaVariavel + " " + variavelDeclarada + ";\n"
+                variavelDeclarada = ""
+                tipoDaVariavel = ""
+                regularDeclaracaoFuncao = 0
+            if(simbolo[0] == "logico"):
+                tipoDaVariavel += "boolean"
+                formarDeclaracao += tipoDaVariavel + " " + variavelDeclarada + ";\n"
+                variavelDeclarada = ""
+                tipoDaVariavel = ""
+                regularDeclaracaoFuncao = 0
+            if(simbolo[0] == "caractere"):
+                tipoDaVariavel += "String"
+                formarDeclaracao += tipoDaVariavel + " " + variavelDeclarada + ";\n"
+                variavelDeclarada = ""
+                tipoDaVariavel = ""
+                regularDeclaracaoFuncao = 0
+
+        if(regularDeclaracaoProcedimento == 1):
+            if(simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO" or simbolo[0] == ","):
+                variavelDeclarada += simbolo[0] + " "
+            if(simbolo[0] == "inteiro"):
+                tipoDaVariavel += "int"
+                formarDeclaracao += tipoDaVariavel + " " + variavelDeclarada + ";\n"
+                variavelDeclarada = ""
+                tipoDaVariavel = ""
+                regularDeclaracaoProcedimento = 0
+            if(simbolo[0] == "real"):
+                tipoDaVariavel += "double"
+                formarDeclaracao += tipoDaVariavel + " " + variavelDeclarada + ";\n"
+                variavelDeclarada = ""
+                tipoDaVariavel = ""
+                regularDeclaracaoProcedimento = 0
+            if(simbolo[0] == "logico"):
+                tipoDaVariavel += "boolean"
+                formarDeclaracao += tipoDaVariavel + " " + variavelDeclarada + ";\n"
+                variavelDeclarada = ""
+                tipoDaVariavel = ""
+                regularDeclaracaoProcedimento = 0
+            if(simbolo[0] == "caractere"):
+                tipoDaVariavel += "String"
+                formarDeclaracao += tipoDaVariavel + " " + variavelDeclarada + ";\n"
+                variavelDeclarada = ""
+                tipoDaVariavel = ""
+                regularDeclaracaoProcedimento = 0
+        
+                
+            
+        if(simbolo[0] == "inicio" and FuncaoSim == 0 and ProcedimentoSim == 0):
+            algoritmoFinal += algoritmo + formarDeclaracao
+            algoritmoFinal += algoritmoFinalParteFuncaoOuProcedimento
+            algoritmoFinal += "public static void main(String[] args) {\n"
+            iniciou = 1
+
+        if(simbolo[0] == "inicio" and FuncaoSim == 1):
+            algoritmoFinalParteFuncaoOuProcedimento += "{\n"
+            algoritmoFinalParteFuncaoOuProcedimento += formarDeclaracao
+            formarDeclaracao = ""
+            variavelDeclarada = ""
+            tipoDaVariavel = ""
+            iniciou = 2
+
+        if(simbolo[0] == "inicio" and ProcedimentoSim == 1):
+            algoritmoFinalParteFuncaoOuProcedimento += "{\n"
+            algoritmoFinalParteFuncaoOuProcedimento += formarDeclaracao
+            formarDeclaracao = ""
+            variavelDeclarada = ""
+            tipoDaVariavel = ""
+            iniciou = 2
+
+            
+        if(iniciou == 1):
+            if(simbolo[1] != valorAnterior and valorAnterior != "" and ateRepita == 1):
+                if(valorAnterior == "NOME_ALGORITMO/VALOR_LITERAL" or valorAnterior == "VALOR_LITERAL"
+                   or valorAnterior == "FECHA_PARENTESES" or valorAnterior == "VALOR_REAL" or  valorAnterior == "VERDADEIRO" or  valorAnterior == "FALSO"
+                   or valorAnterior == "VALOR_INT" or valorAnterior == "OP_SEP_DIFERENTE_TIPO" or valorAnterior == "OP_SEP_MESMO_TIPO" or valorAnterior == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"):
+                    if(simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"):
+                        if(primeiroValor == 1 and primeiroValorAux == 0):
+                            if(algoritmoAuxPrimeiroValor == " false "):
+                                algoritmoFinal += "true );\n"
+                            if(algoritmoAuxPrimeiroValor == " true "):
+                                algoritmoFinal += "false );\n"
+                        else:
+                            algoritmoFinal += ");\n"
+                        primeiroValor = 0
+                        primeiroValorAux = 0
+                        algoritmoAuxPrimeiroValor = ""
+                        ateRepita = 0
+            valorAnterior = simbolo[1]
+            
+            if(ateRepita == 1 and (simbolo[0] != ">" and simbolo[0] != "<" and simbolo[0] != ">="and simbolo[0] != "<=" and simbolo[0] != "="
+                                   and simbolo[0] != "<>" and simbolo[1] != "OP_ARIT" and simbolo[1] != "OP_ARIT/OP_CARACTERE" and simbolo[1] != "MOD" 
+            and simbolo[1] != "ABRE_PARENTESES" and simbolo[1] != "FECHA_PARENTESES" and simbolo[1] != "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"
+            and simbolo[1] != "VALOR_INT" and simbolo[1] != "ABS" and simbolo[1] != "RAIZQ" and simbolo[1] != "RANDI" and simbolo[1] != "EXP" and simbolo[1] != "QUAD"
+            and simbolo[1] != "NOME_ALGORITMO/VALOR_LITERAL" and simbolo[1] != "VALOR_LITERAL" and simbolo[1] != "VERDADEIRO" and simbolo[1] != "FALSO" and simbolo[1] != "VALOR_REAL"
+            and simbolo[1] != "E" and simbolo[1] != "XOU" and simbolo[1] != "OU" and simbolo[1] != "NAO" and simbolo[1] != "OP_SEP_DIFERENTE_TIPO" and simbolo[1] != "OP_SEP_MESMO_TIPO"
+                                   and simbolo[1] != "OP_SEP_MESMO_TIPO")):
+                if(primeiroValor == 1 and primeiroValorAux == 0):
+                    if(algoritmoAuxPrimeiroValor == " false "):
+                        algoritmoFinal += "true );\n"
+                    if(algoritmoAuxPrimeiroValor == " true "):
+                        algoritmoFinal += "false );\n"
+                else:
+                    algoritmoFinal += ");\n"
+                primeiroValor = 0
+                primeiroValorAux = 0
+                algoritmoAuxPrimeiroValor = ""
+                ateRepita = 0
+
+            if(algoritmoAuxPrimeiroValor != ""):
+                algoritmoFinal += algoritmoAuxPrimeiroValor
+                algoritmoAuxPrimeiroValor = ""
+                primeiroValor = 0
+
+            
+                
+            if((simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO" or simbolo[1] == "VALOR_REAL" or simbolo[1] == "NOME_ALGORITMO/VALOR_LITERAL"
+               or simbolo[1] == "VALOR_LITERAL" or simbolo[1] == "OP_ARIT" or simbolo[1] == "OP_ARIT/OP_CARACTERE" or
+                (simbolo[1] == "FECHA_PARENTESES" and escrita == 0 and contarParenteses == 0 and lendoValor == 0)) and simbolo[0] != "^" ):
+                algoritmoFinal += simbolo[0] + " "
+
+            if(simbolo[1] == "ABRE_PARENTESES" and lendoValor == 0):
+                algoritmoFinal += simbolo[0] + " "
+                
+
+            if(simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO" and lendoValor == 1):
+                for j in tabela_simbolos2:
+                    if(simbolo[0] == j[0]):
+                        verTipo = j[1]
+
+            if(verTipo == "inteiro" and lendoValor == 1 and simbolo[0] == ")"):
+                lendoValor = 0
+                algoritmoFinal += " = Integer.parseInt(System.console().readLine());\n"
+
+            if(verTipo == "real" and lendoValor == 1 and simbolo[0] == ")"):
+                lendoValor = 0
+                algoritmoFinal += " = Double.parseDouble(System.console().readLine());\n"
+
+            if(verTipo == "logico" and lendoValor == 1 and simbolo[0] == ")"):
+                lendoValor = 0
+                algoritmoFinal += " = Boolean.parseBoolean(System.console().readLine());\n"
+
+            if(verTipo == "caractere" and lendoValor == 1 and simbolo[0] == ")"):
+                lendoValor = 0
+                algoritmoFinal += " = System.console().readLine();\n"
+
+            if(contarParenteses == 1 and simbolo[1] == "ABRE_PARENTESES"):
+                quantosParenteses = quantosParenteses + 1
+                listaParenteses[0] = quantosParenteses
+
+            if(contarParenteses == 1 and simbolo[1] == "FECHA_PARENTESES"):
+                quantosParenteses = quantosParenteses - 1
+                if(quantosParenteses == 0):
+                    del listaParenteses[0]
+                    contarParenteses = 0
+                    algoritmoFinal += ", 2) "
+                    quantosQuad = 0
+                elif(quantosParenteses == ( quantosQuad - 1 )  and quantosQuad == 2):
+                    algoritmoFinal += ", 2 "
+                    quantosQuad -= 1
+                elif(quantosParenteses == ( quantosQuad - 1 )  and quantosQuad > 1):
+                    algoritmoFinal += ", 2 ) "
+                    quantosQuad -= 1
+                else:
+                    listaParenteses[0] = quantosParenteses
+
+            if(simbolo[1] == "FECHA_PARENTESES" and contarParenteses == 1 and quantosParenteses == 1):
+                algoritmoFinal += simbolo[0] + " "
+                
+                
+                
+                
+
+            if(simbolo[1] == "FECHA_PARENTESES" and escrita == 1):
+                algoritmoFinal += simbolo[0] + ";\n"
+                escrita = 0
+
+                
+                
+            if(simbolo[1] == "VALOR_INT" and passoOuNao == 0 and ateFor == 0):
+                 algoritmoFinal += simbolo[0] + " "
+            if(simbolo[0] == "<-"):
+                algoritmoFinal += " = "
+            if(simbolo[0] == "," and escrita == 0):
+                virgulaExp = 0
+                algoritmoFinal += " , "
+            if(simbolo[0] == "," and escrita == 1):
+                algoritmoFinal += " + "
+            if(simbolo[0] == "MOD"):
+                algoritmoFinal += " % "
+            if(simbolo[0] == "e"):
+                algoritmoFinal += " && "
+            if(simbolo[0] == "ou"):
+                algoritmoFinal += " || "
+            if(simbolo[0] == "nao"):
+                algoritmoFinal += " ! "
+            if(simbolo[0] == "xou"):
+                algoritmoFinal += " ^ "
+            if(simbolo[1] == "---"):
+                algoritmoFinal += ";\n"
+            if(primeiroValor == 0 or primeiroValorAux == 1):
+                if(simbolo[0] == "FALSO"):
+                    algoritmoFinal += " false "
+                if(simbolo[0] == "VERDADEIRO"):
+                    algoritmoFinal += " true "
+            else:
+                if(primeiroValor == 1 and primeiroValorAux == 0 and simbolo[0] == "FALSO"):
+                    algoritmoAuxPrimeiroValor += " false "
+                if(primeiroValor == 1 and primeiroValorAux == 0 and simbolo[0] == "VERDADEIRO"):
+                    algoritmoAuxPrimeiroValor += " true "
+                
+
+
+            if(algoritmoAuxPrimeiroValor == ""):
+                primeiroValor = 0
+                    
+
+            if(simbolo[0] == "para"):
+                novoFor = 1
+                algoritmoFinal += "for("
+            if(novoFor == 1 and simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"):
+                manterVariavelFor = simbolo[0]
+                novoFor = 2
+
+            if(novoFor == 3 and simbolo[1] == "VALOR_INT"):
+                manterVariavel3For = simbolo[0]
+                novoFor = 4
+                if(int(manterVariavel3For) >=  int(manterVariavel2For)):
+                    algoritmoIntermediario += " < " + manterVariavel3For
+                    algoritmoIntermediario2 += " > " + manterVariavel3For
+                if(int(manterVariavel3For) < int(manterVariavel2For)):
+                    algoritmoIntermediario += " < " + manterVariavel3For
+                    algoritmoIntermediario2 += " > " + manterVariavel3For
+                ateFor = 0
+                    
+                
+            if(novoFor == 2 and simbolo[1] == "VALOR_INT"):
+                
+                manterVariavel2For = simbolo[0]
+                novoFor = 3
+
+       
+                
+            if(simbolo[0] == "de"):
+                algoritmoFinal += " = "
+                estaEmFor = 1
+            if(simbolo[0] == "ate" and estaEmFor == 1):
+                
+                algoritmoFinal += "; " + manterVariavelFor
+                ateFor = 1
+
+            if(simbolo[0] == "passo"):
+                passoOuNao = 1
+            if(passoOuNao == 1 and simbolo[1] == "VALOR_INT"):
+                if(int(simbolo[0]) >= 0 ):
+                    positivoOuNao = "sim"
+                    algoritmoIntermediario3 = "; " + manterVariavelFor + " = " + manterVariavelFor + " + "  + simbolo[0]
+                else:
+                    positivoOuNao = "nao"
+                    algoritmoIntermediario3 += "; " + manterVariavelFor + " = " + manterVariavelFor + " - " + str(abs(int(simbolo[0])))
+            
+            if(passoOuNao == 0 and simbolo[0] == "faca" and  facaEnquanto == 0):
+                algoritmoFinal += algoritmoIntermediario
+                algoritmoFinal += "; " + manterVariavelFor + "++" + "){\n"
+                algoritmoIntermediario = ""
+                algoritmoIntermediario2 = ""
+                
+                estaEmFor = 0
+            if(passoOuNao == 1 and simbolo[0] == "faca"):
+                if(positivoOuNao == "nao"):
+                    algoritmoFinal += algoritmoIntermediario2 + algoritmoIntermediario3 
+                else:
+                    algoritmoFinal += algoritmoIntermediario + algoritmoIntermediario3 
+                algoritmoIntermediario = ""
+                algoritmoIntermediario2 = ""
+                algoritmoIntermediario3 = ""
+                algoritmoFinal += "){\n"
+                positivoOuNao = ""
+                passoOuNao = 0
+                estaEmFor = 0
+
+            if(simbolo[0] == "faca" and  facaEnquanto == 1):
+                algoritmoFinal += "){\n"
+                facaEnquanto = 0
+            
+            if(simbolo[0] == "fimpara"):
+                algoritmoFinal += "}\n"
+                
+            if(simbolo[0] == "se"):
+                algoritmoFinal += "if( "
+            if(simbolo[0] == "entao"):
+                algoritmoFinal += "){\n"
+            if(simbolo[0] == "senao"):
+                algoritmoFinal += "}\nelse{\n"
+                
+            if(simbolo[0] == "fimse"):
+                algoritmoFinal += "}\n"
+
+            if(ateRepita == 0):
+                if(simbolo[0] == "="):
+                    algoritmoFinal += " == "
+
+                if(simbolo[0] == ">" or simbolo[0] == "<" or simbolo[0] == ">=" or simbolo[0] == "<="):
+                    algoritmoFinal += " " + simbolo[0] + " "
+
+                if(simbolo[0] == "<>"):
+                    algoritmoFinal += " != "
+
+            if(ateRepita == 1):
+                if(simbolo[0] == "="):
+                    algoritmoFinal += " != "
+
+                if(simbolo[0] == ">"):
+                    algoritmoFinal += " <= "
+
+                if(simbolo[0] == "<"):
+                    algoritmoFinal += " >= "
+
+                if(simbolo[0] == ">="):
+                    algoritmoFinal += " < "
+
+                if(simbolo[0] == "<="):
+                    algoritmoFinal += " > "
+                    
+                if(simbolo[0] == "<>"):
+                    algoritmoFinal += " == "
+            
+                
+            if(simbolo[0] == "repita"):
+                algoritmoFinal += "do{\n"
+
+            if(simbolo[0] == "ate" and estaEmFor == 0):
+                algoritmoFinal += "}while( "
+                ateRepita = 1
+
+
+            if(simbolo[0] == "fimrepita"):
+                algoritmoFinal += "}while(true);\n"
+
+            if(simbolo[0] == "enquanto"):
+                algoritmoFinal += "while( "
+                facaEnquanto = 1
+
+            if(simbolo[0] == "fimenquanto"):
+                algoritmoFinal += "}\n"
+
+            if(simbolo[0] == "escreva"):
+                algoritmoFinal += "\nSystem.out.print"
+                escrita = 1
+
+            if(simbolo[0] == "escreval"):
+                algoritmoFinal += "\nSystem.out.println"
+                escrita = 1
+
+            if(simbolo[0] == "interrompa"):
+                algoritmoFinal += "\nbreak;\n"
+
+            if(simbolo[0] == "retorne"):
+                algoritmoFinal += "\nreturn "
+                
+
+            if(simbolo[0] == "abs"):
+                algoritmoFinal += "Math.abs"
+
+            if(simbolo[0] == "exp"):
+                algoritmoFinal += "Math.pow"
+                
+
+            if(simbolo[0] == "raizq"):
+                algoritmoFinal += "Math.sqrt"
+
+            if(simbolo[0] == "randi"):
+                algoritmoFinal += " new Random().nextInt"
+                TemRandi = 1
+
+            if(simbolo[0] == "quad"):
+                algoritmoFinal += "Math.pow"
+                if(contarParenteses == 0):
+                    listaParenteses.insert(0, 0)
+                contarParenteses = 1
+                quantosQuad += 1
+                
+           
+            if(simbolo[0] == "escolha"):
+                algoritmoFinal += "switch( "
+                novoEscolha = 1
+
+            if(novoEscolha == 0 and simbolo[0] == "caso"):
+                algoritmoFinal += "\nbreak;\n"
+                algoritmoFinal += "case "
+                possivelVirgulaCaso = 1
+
+            if(novoEscolha == 1 and simbolo[0] == "caso"):
+                algoritmoFinal += "){\n"
+                algoritmoFinal += "case "
+                novoEscolha = 0
+                possivelVirgulaCaso = 1
+
+            if(simbolo[0] == "outrocaso"):
+                algoritmoFinal += "\nbreak;\n"
+                algoritmoFinal += "\ndefault:\n"
+
+            if(simbolo[0] == "fimescolha"):
+                algoritmoFinal += "}\n"
+                
+            if(simbolo[1] == "-----"):
+                algoritmoFinal += ":\n"
+
+            if(simbolo[0] == "leia"):
+                lendoValor = 1
+                
+        if(iniciou == 2):
+            
+            if(simbolo[1] != valorAnterior and valorAnterior != "" and ateRepita == 1):
+                if(valorAnterior == "NOME_ALGORITMO/VALOR_LITERAL" or valorAnterior == "VALOR_LITERAL"
+                   or valorAnterior == "FECHA_PARENTESES" or valorAnterior == "VALOR_REAL" or  valorAnterior == "VERDADEIRO" or  valorAnterior == "FALSO"
+                   or valorAnterior == "VALOR_INT" or valorAnterior == "OP_SEP_DIFERENTE_TIPO" or valorAnterior == "OP_SEP_MESMO_TIPO" or valorAnterior == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"):
+                    if(simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"):
+                        if(primeiroValor == 1 and primeiroValorAux == 0):
+                            if(algoritmoAuxPrimeiroValor == " false "):
+                                algoritmoFinalParteFuncaoOuProcedimento += "true );\n"
+                            if(algoritmoAuxPrimeiroValor == " true "):
+                                algoritmoFinalParteFuncaoOuProcedimento += "false );\n"
+                        else:
+                            algoritmoFinalParteFuncaoOuProcedimento += ");\n"
+                        primeiroValor = 0
+                        primeiroValorAux = 0
+                        algoritmoAuxPrimeiroValor = ""
+                        ateRepita = 0
+            valorAnterior = simbolo[1]
+            
+            if(ateRepita == 1 and (simbolo[0] != ">" and simbolo[0] != "<" and simbolo[0] != ">="and simbolo[0] != "<=" and simbolo[0] != "="
+                                   and simbolo[0] != "<>" and simbolo[1] != "OP_ARIT" and simbolo[1] != "OP_ARIT/OP_CARACTERE" and simbolo[1] != "MOD" 
+            and simbolo[1] != "ABRE_PARENTESES" and simbolo[1] != "FECHA_PARENTESES" and simbolo[1] != "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"
+            and simbolo[1] != "VALOR_INT" and simbolo[1] != "ABS" and simbolo[1] != "RAIZQ" and simbolo[1] != "RANDI" and simbolo[1] != "EXP" and simbolo[1] != "QUAD"
+            and simbolo[1] != "NOME_ALGORITMO/VALOR_LITERAL" and simbolo[1] != "VALOR_LITERAL" and simbolo[1] != "VERDADEIRO" and simbolo[1] != "FALSO" and simbolo[1] != "VALOR_REAL"
+            and simbolo[1] != "E" and simbolo[1] != "XOU" and simbolo[1] != "OU" and simbolo[1] != "NAO" and simbolo[1] != "OP_SEP_DIFERENTE_TIPO" and simbolo[1] != "OP_SEP_MESMO_TIPO"
+                                   and simbolo[1] != "OP_SEP_MESMO_TIPO")):
+                if(primeiroValor == 1 and primeiroValorAux == 0):
+                    if(algoritmoAuxPrimeiroValor == " false "):
+                        algoritmoFinalParteFuncaoOuProcedimento += "true );\n"
+                    if(algoritmoAuxPrimeiroValor == " true "):
+                        algoritmoFinalParteFuncaoOuProcedimento += "false );\n"
+                else:
+                    algoritmoFinalParteFuncaoOuProcedimento += ");\n"
+                primeiroValor = 0
+                primeiroValorAux = 0
+                algoritmoAuxPrimeiroValor = ""
+                ateRepita = 0
+
+            if(algoritmoAuxPrimeiroValor != ""):
+                algoritmoFinalParteFuncaoOuProcedimento += algoritmoAuxPrimeiroValor
+                algoritmoAuxPrimeiroValor = ""
+                primeiroValor = 0
+
+            
+                
+            if((simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO" or simbolo[1] == "VALOR_REAL" or simbolo[1] == "NOME_ALGORITMO/VALOR_LITERAL"
+               or simbolo[1] == "VALOR_LITERAL" or simbolo[1] == "OP_ARIT" or simbolo[1] == "OP_ARIT/OP_CARACTERE" or
+                (simbolo[1] == "FECHA_PARENTESES" and escrita == 0 and contarParenteses == 0 and lendoValor == 0)) and simbolo[0] != "^"  ):
+                algoritmoFinalParteFuncaoOuProcedimento += simbolo[0] + " "
+
+            if(simbolo[1] == "ABRE_PARENTESES" and lendoValor == 0):
+                algoritmoFinalParteFuncaoOuProcedimento += simbolo[0] + " "
+                
+
+            if(simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO" and lendoValor == 1):
+                for j in tabela_simbolos2:
+                    if(simbolo[0] == j[0]):
+                        verTipo = j[1]
+                        
+
+            if(verTipo == "inteiro" and lendoValor == 1 and simbolo[0] == ")"):
+                lendoValor = 0
+                algoritmoFinalParteFuncaoOuProcedimento += " = Integer.parseInt(System.console().readLine());\n"
+
+            if(verTipo == "real" and lendoValor == 1 and simbolo[0] == ")"):
+                lendoValor = 0
+                algoritmoFinalParteFuncaoOuProcedimento += " = Double.parseDouble(System.console().readLine());\n"
+
+            if(verTipo == "logico" and lendoValor == 1 and simbolo[0] == ")"):
+                lendoValor = 0
+                algoritmoFinalParteFuncaoOuProcedimento += " = Boolean.parseBoolean(System.console().readLine());\n"
+
+            if(verTipo == "caractere" and lendoValor == 1 and simbolo[0] == ")"):
+                lendoValor = 0
+                algoritmoFinalParteFuncaoOuProcedimento += " = System.console().readLine();\n"
+
+            if(contarParenteses == 1 and simbolo[1] == "ABRE_PARENTESES"):
+                quantosParenteses = quantosParenteses + 1
+                listaParenteses[0] = quantosParenteses
+
+            if(contarParenteses == 1 and simbolo[1] == "FECHA_PARENTESES"):
+                quantosParenteses = quantosParenteses - 1
+                if(quantosParenteses == 0):
+                    del listaParenteses[0]
+                    contarParenteses = 0
+                    algoritmoFinalParteFuncaoOuProcedimento += ", 2) "
+                    quantosQuad = 0
+                elif(quantosParenteses == ( quantosQuad - 1 )  and quantosQuad == 2):
+                    algoritmoFinalParteFuncaoOuProcedimento += ", 2 "
+                    quantosQuad -= 1
+                elif(quantosParenteses == ( quantosQuad - 1 ) and quantosQuad > 1):
+                    algoritmoFinalParteFuncaoOuProcedimento += ", 2) "
+                    quantosQuad -= 1
+                else:
+                    listaParenteses[0] = quantosParenteses
+
+
+
+            if(simbolo[1] == "FECHA_PARENTESES" and contarParenteses == 1 and quantosParenteses == 1):
+                algoritmoFinalParteFuncaoOuProcedimento += simbolo[0] + " "
+                
+                
+                
+                
+
+            if(simbolo[1] == "FECHA_PARENTESES" and escrita == 1):
+                algoritmoFinalParteFuncaoOuProcedimento += simbolo[0] + ";\n"
+                escrita = 0
+                
+                
+            if(simbolo[1] == "VALOR_INT" and passoOuNao == 0 and ateFor == 0):
+                 algoritmoFinalParteFuncaoOuProcedimento += simbolo[0] + " "
+            if(simbolo[0] == "<-"):
+                algoritmoFinalParteFuncaoOuProcedimento += " = "
+            if(simbolo[0] == "," and escrita == 0):
+                virgulaExp = 0
+                algoritmoFinalParteFuncaoOuProcedimento += " , "
+            if(simbolo[0] == "," and escrita == 1):
+                algoritmoFinalParteFuncaoOuProcedimento += " + "
+            if(simbolo[0] == "MOD"):
+                algoritmoFinalParteFuncaoOuProcedimento += " % "
+            if(simbolo[0] == "e"):
+                algoritmoFinalParteFuncaoOuProcedimento += " && "
+            if(simbolo[0] == "ou"):
+                algoritmoFinalParteFuncaoOuProcedimento += " || "
+            if(simbolo[0] == "nao"):
+                algoritmoFinalParteFuncaoOuProcedimento += " ! "
+            if(simbolo[0] == "xou"):
+                algoritmoFinalParteFuncaoOuProcedimento += " ^ "
+            if(simbolo[1] == "---"):
+                algoritmoFinalParteFuncaoOuProcedimento += ";\n"
+               
+            
+            if(primeiroValor == 0 or primeiroValorAux == 1):
+                if(simbolo[0] == "FALSO"):
+                    algoritmoFinalParteFuncaoOuProcedimento += " false "
+                if(simbolo[0] == "VERDADEIRO"):
+                    algoritmoFinalParteFuncaoOuProcedimento += " true "
+            else:
+                if(primeiroValor == 1 and primeiroValorAux == 0 and simbolo[0] == "FALSO"):
+                    algoritmoAuxPrimeiroValor += " false "
+                if(primeiroValor == 1 and primeiroValorAux == 0 and simbolo[0] == "VERDADEIRO"):
+                    algoritmoAuxPrimeiroValor += " true "
+                
+
+
+            if(algoritmoAuxPrimeiroValor == ""):
+                primeiroValor = 0
+                    
+
+            if(simbolo[0] == "para"):
+                novoFor = 1
+                algoritmoFinalParteFuncaoOuProcedimento += "for("
+            if(novoFor == 1 and simbolo[1] == "VARIAVEL/NOME_DE_FUNCAO/NOME_DE_PROCEDIMENTO"):
+                manterVariavelFor = simbolo[0]
+                novoFor = 2
+
+            if(novoFor == 3 and simbolo[1] == "VALOR_INT"):
+                manterVariavel3For = simbolo[0]
+                novoFor = 4
+                if(int(manterVariavel3For) >=  int(manterVariavel2For)):
+                    algoritmoIntermediario += " < " + manterVariavel3For
+                    algoritmoIntermediario2 += " > " + manterVariavel3For
+                if(int(manterVariavel3For) < int(manterVariavel2For)):
+                    algoritmoIntermediario += " < " + manterVariavel3For
+                    algoritmoIntermediario2 += " > " + manterVariavel3For
+                ateFor = 0
+                    
+                
+            if(novoFor == 2 and simbolo[1] == "VALOR_INT"):
+                
+                manterVariavel2For = simbolo[0]
+                novoFor = 3
+
+       
+                
+            if(simbolo[0] == "de"):
+                algoritmoFinalParteFuncaoOuProcedimento += " = "
+                estaEmFor = 1
+            if(simbolo[0] == "ate" and estaEmFor == 1):
+                
+                algoritmoFinalParteFuncaoOuProcedimento += "; " + manterVariavelFor
+                ateFor = 1
+
+            if(simbolo[0] == "passo"):
+                passoOuNao = 1
+            if(passoOuNao == 1 and simbolo[1] == "VALOR_INT"):
+                if(int(simbolo[0]) >= 0 ):
+                    positivoOuNao = "sim"
+                    algoritmoIntermediario3 = "; " + manterVariavelFor + " = " + manterVariavelFor + " + "  + simbolo[0]
+                else:
+                    positivoOuNao = "nao"
+                    algoritmoIntermediario3 += "; " + manterVariavelFor + " = " + manterVariavelFor + " - " + str(abs(int(simbolo[0])))
+            
+            if(passoOuNao == 0 and simbolo[0] == "faca" and  facaEnquanto == 0):
+                algoritmoFinalParteFuncaoOuProcedimento += algoritmoIntermediario
+                algoritmoFinalParteFuncaoOuProcedimento += "; " + manterVariavelFor + "++" + "){\n"
+                algoritmoIntermediario = ""
+                algoritmoIntermediario2 = ""
+                
+                estaEmFor = 0
+            if(passoOuNao == 1 and simbolo[0] == "faca"):
+                if(positivoOuNao == "nao"):
+                    algoritmoFinalParteFuncaoOuProcedimento += algoritmoIntermediario2 + algoritmoIntermediario3 
+                else:
+                    algoritmoFinalParteFuncaoOuProcedimento += algoritmoIntermediario + algoritmoIntermediario3 
+                algoritmoIntermediario = ""
+                algoritmoIntermediario2 = ""
+                algoritmoIntermediario3 = ""
+                algoritmoFinalParteFuncaoOuProcedimento += "){\n"
+                positivoOuNao = ""
+                passoOuNao = 0
+                estaEmFor = 0
+
+            if(simbolo[0] == "faca" and  facaEnquanto == 1):
+                algoritmoFinalParteFuncaoOuProcedimento += "){\n"
+                facaEnquanto = 0
+            
+            if(simbolo[0] == "fimpara"):
+                algoritmoFinalParteFuncaoOuProcedimento += "}\n"
+                
+            if(simbolo[0] == "se"):
+                algoritmoFinalParteFuncaoOuProcedimento += "if( "
+            if(simbolo[0] == "entao"):
+                algoritmoFinalParteFuncaoOuProcedimento += "){\n"
+            if(simbolo[0] == "senao"):
+                algoritmoFinalParteFuncaoOuProcedimento += "}\nelse{\n"
+                
+            if(simbolo[0] == "fimse"):
+                algoritmoFinalParteFuncaoOuProcedimento += "}\n"
+
+            if(ateRepita == 0):
+                if(simbolo[0] == "="):
+                    algoritmoFinalParteFuncaoOuProcedimento += " == "
+
+                if(simbolo[0] == ">" or simbolo[0] == "<" or simbolo[0] == ">=" or simbolo[0] == "<="):
+                    algoritmoFinalParteFuncaoOuProcedimento += " " + simbolo[0] + " "
+
+                if(simbolo[0] == "<>"):
+                    algoritmoFinalParteFuncaoOuProcedimento += " != "
+
+            if(ateRepita == 1):
+                if(simbolo[0] == "="):
+                    algoritmoFinalParteFuncaoOuProcedimento += " != "
+
+                if(simbolo[0] == ">"):
+                    algoritmoFinalParteFuncaoOuProcedimento += " <= "
+
+                if(simbolo[0] == "<"):
+                    algoritmoFinalParteFuncaoOuProcedimento += " >= "
+
+                if(simbolo[0] == ">="):
+                    algoritmoFinalParteFuncaoOuProcedimento += " < "
+
+                if(simbolo[0] == "<="):
+                    algoritmoFinalParteFuncaoOuProcedimento += " > "
+                    
+                if(simbolo[0] == "<>"):
+                    algoritmoFinalParteFuncaoOuProcedimento += " == "
+            
+                
+            if(simbolo[0] == "repita"):
+                algoritmoFinalParteFuncaoOuProcedimento += "do{\n"
+
+            if(simbolo[0] == "ate" and estaEmFor == 0):
+                algoritmoFinalParteFuncaoOuProcedimento += "}while( "
+                ateRepita = 1
+
+
+            if(simbolo[0] == "fimrepita"):
+                algoritmoFinalParteFuncaoOuProcedimento += "}while(true);\n"
+
+            if(simbolo[0] == "enquanto"):
+                algoritmoFinalParteFuncaoOuProcedimento += "while( "
+                facaEnquanto = 1
+
+            if(simbolo[0] == "fimenquanto"):
+                algoritmoFinalParteFuncaoOuProcedimento += "}\n"
+
+            if(simbolo[0] == "escreva"):
+                algoritmoFinalParteFuncaoOuProcedimento += "\nSystem.out.print"
+                escrita = 1
+
+            if(simbolo[0] == "escreval"):
+                algoritmoFinalParteFuncaoOuProcedimento += "\nSystem.out.println"
+                escrita = 1
+
+            if(simbolo[0] == "interrompa"):
+                algoritmoFinalParteFuncaoOuProcedimento += "\nbreak;\n"
+
+            if(simbolo[0] == "retorne"):
+                algoritmoFinalParteFuncaoOuProcedimento += "\nreturn "
+
+            if(simbolo[0] == "abs"):
+                algoritmoFinalParteFuncaoOuProcedimento += "Math.abs"
+
+            if(simbolo[0] == "exp"):
+                algoritmoFinalParteFuncaoOuProcedimento += "Math.pow"
+                
+
+            if(simbolo[0] == "raizq"):
+                algoritmoFinalParteFuncaoOuProcedimento += "Math.sqrt"
+
+            if(simbolo[0] == "randi"):
+                algoritmoFinalParteFuncaoOuProcedimento += " new Random().nextInt"
+                TemRandi = 1
+
+            if(simbolo[0] == "quad"):
+                algoritmoFinalParteFuncaoOuProcedimento += "Math.pow"
+                if(contarParenteses == 0):
+                    listaParenteses.insert(0, 0)
+                contarParenteses = 1
+                quantosQuad += 1
+                
+           
+            if(simbolo[0] == "escolha"):
+                algoritmoFinalParteFuncaoOuProcedimento += "switch( "
+                novoEscolha = 1
+
+            if(novoEscolha == 0 and simbolo[0] == "caso"):
+                algoritmoFinalParteFuncaoOuProcedimento += "\nbreak;\n"
+                algoritmoFinalParteFuncaoOuProcedimento += "case "
+                possivelVirgulaCaso = 1
+
+            if(novoEscolha == 1 and simbolo[0] == "caso"):
+                algoritmoFinalParteFuncaoOuProcedimento += "){\n"
+                algoritmoFinalParteFuncaoOuProcedimento += "case "
+                novoEscolha = 0
+                possivelVirgulaCaso = 1
+
+            if(simbolo[0] == "outrocaso"):
+                algoritmoFinalParteFuncaoOuProcedimento += "\nbreak;\n"
+                algoritmoFinalParteFuncaoOuProcedimento += "\ndefault:\n"
+
+            if(simbolo[0] == "fimescolha"):
+                algoritmoFinalParteFuncaoOuProcedimento += "}\n"
+                
+            if(simbolo[1] == "-----"):
+                algoritmoFinalParteFuncaoOuProcedimento += ":\n"
+
+            if(simbolo[0] == "leia"):
+                lendoValor = 1
+
+            if(simbolo[0] == "fimfuncao"):
+                algoritmoFinalParteFuncaoOuProcedimento += "}\n"
+                iniciou = 0
+                FuncaoSim = 0
+
+            if(simbolo[0] == "fimprocedimento"):
+                algoritmoFinalParteFuncaoOuProcedimento += "}\n"
+                iniciou = 0
+                ProcedimentoSim = 0
+            
+        if(simbolo[0] == "fimalgoritmo"):
+            algoritmoFinal += "}\n" + "}\n" 
+            
+
+    algoritmoFinalComImports = ""
+    if(TemRandi == 1):
+        algoritmoFinalComImports += "import java.util.Random;\n"
+        
+    algoritmoFinalComImports += algoritmoFinal
+
+    area_resultado.config(state=tk.NORMAL)
+    area_resultado.delete("1.0", tk.END)
+    area_resultado.insert(tk.END, f"{algoritmoFinalComImports}")
+    area_resultado.config(state=tk.DISABLED)
+            
+    #semantico(tabela_simbolos)
+    print(algoritmoFinalComImports)
+
+
+
+    with open(texto_sem_aspas + ".java", 'w') as f:
+        f.write(algoritmoFinalComImports)
+    
+    
+    try:
+        os.system('cmd /k "javac ' + texto_sem_aspas + '.java && java ' + texto_sem_aspas + '"')
+        print("Execução realizada com sucesso.")
+    except subprocess.CalledProcessError as e:
+        print("Erro na execução do código")
+    
     
 
 def arquivo():
@@ -1945,6 +3457,14 @@ frame_buttons['bg'] ='silver'
 
 # Botão compilar
 botao_compilar = tk.Button(frame_buttons, text="Compilar", command=compilar, bg='#9A7B4F', font = "bold")
+botao_compilar.pack(side="left", pady=5)
+
+# Botão Analisador Semântico
+botao_compilar = tk.Button(frame_buttons, text="Analisador Semântico", command=compilarLexicoESemantico, bg='white', font = "bold")
+botao_compilar.pack(side="left", pady=5)
+
+# Botão Gerador de Código
+botao_compilar = tk.Button(frame_buttons, text="Gerador de Código", command=geradorDeCodigo, bg='green', font = "bold")
 botao_compilar.pack(side="left", pady=5)
 
 # Botão arquivo
