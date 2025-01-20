@@ -10,7 +10,7 @@ Este é um compilador desenvolvido para a linguagem VisuAlg, criado como parte d
 ### **Features**
 **Caixa de Entrada Superior:** responsável por receber o código do usuário a ser compilado.
 
-**Caixa de Saída Superior:** responsável por entregar o código compilado ao usuário.
+**Caixa de Saída Inferior:** responsável por entregar o código compilado ao usuário.
 
 **Botão Compilar:** compila o código da caixa de entrada.
 
